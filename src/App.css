@@ -1,0 +1,12 @@
+.App {
+  padding: 50px;
+}
+
+.transactions-list {
+  list-style: none;
+  padding: 0;
+}
+
+.transactions-list li {
+   padding: 20px 0;
+}
