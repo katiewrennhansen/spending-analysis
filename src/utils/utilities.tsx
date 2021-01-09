@@ -11,7 +11,10 @@ export const buildBreakdown: BuildBreakdown = (transactions: Transaction[]) => {
         breakdown[category] = 0;
         transactions
             .filter(transaction => transaction['Category'] === category)
-            .map(transaction => breakdown[category] += Number(transaction['Amount']))
+            .map(transaction => {
+                if(transaction['Transaction Type'] === 'credit') breakdown[category] += Number(transaction['Amount'])
+                else breakdown[category] -= Number(transaction['Amount'])
+            })
         
         let totalValue = Number(breakdown[category].toFixed(2))
         if(totalValue < 0) breakdown[category] = totalValue;

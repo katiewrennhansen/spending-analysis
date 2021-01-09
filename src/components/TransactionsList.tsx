@@ -8,8 +8,8 @@ interface Props {
 export const TransactionsList: React.FC<Props> = ({ transactions }) => {
     return (
         <ul className="transactions-list">
-            { transactions.map((transaction) => (
-               <Transaction transaction={transaction} />
+            { transactions.map((transaction, i) => (
+               <Transaction key={i} transaction={transaction} />
             ))}
         </ul>
     )

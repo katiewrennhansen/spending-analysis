@@ -1,13 +1,13 @@
 interface Transaction {
-    'Account Name': string;
+    // 'Account Name': string;
     'Amount': string;
     'Category': string;
     'Date': string;
-    'Description': string;
-    'Labels': string;
-    'Notes': string;
-    'Original Description': string;
-    'Transaction Type': string;
+    // 'Description': string;
+    // 'Labels': string;
+    // 'Notes': string;
+    // 'Original Description': string;
+    'Transaction Type': 'credit' | 'debit';
 }
 
 interface Breakdown {
@@ -15,6 +15,8 @@ interface Breakdown {
 }
 
 type UploadData = () => void;
+
+type OnFileLoad = (data: Transaction[], fileInfo: any) => void;
 
 type CreateSummary = (transactions: Transactions[]) => void;
 

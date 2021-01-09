@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import CSVReader from 'react-csv-reader';
 import { Dashboard } from './components/Dashboard';
 import { buildBreakdown, calculateTotals, excludeCategories } from './utils/utilities'
+import './App.css';
 
 const initialTransactions: Transaction[] = [];
 
@@ -11,13 +12,10 @@ function App() {
   const [totalSpent, setTotalSpent] = useState(0)
   const [breakdown, setBreakdown] = useState({})
 
-  const uploadData: UploadData = () => {
-    if(!transactions.length){
-      fetch('http://localhost:8000/')
-        .then(res => res.json())
-        .then(data => {
-          setTransactions(data)
-        })
+  const onFileLoad: OnFileLoad = (data: Transaction[], fileInfo) => {
+    if(data){
+      setTransactions(data)
+      createSummary(data)
     }
   }
 
@@ -31,8 +29,8 @@ function App() {
       setTotalIncome(totalIncome)
 
       //calculate total amount speant and set state
-      let totalSpent: number = calculateTotals(noTransfers, 'debit')
-      setTotalSpent(totalSpent)
+      let spent: number = calculateTotals(noTransfers, 'debit')
+      setTotalSpent(spent)
 
       //set category breakdown
       let newBreakdown: Breakdown = buildBreakdown(noTransfers)
@@ -40,16 +38,15 @@ function App() {
   }
 
   useEffect(() => {
-    uploadData();
-    if(transactions && !totalIncome){
-      createSummary(transactions);
-    }
-  })
+  }, [totalIncome, totalSpent, breakdown])
 
   return (
     <div className="App">
       <h1>Spend Analyzer</h1>
-      <button onClick={() => uploadData()}>Upload Data</button>
+      <CSVReader
+        parserOptions={{ header: true }}
+        onFileLoaded={(data, fileInfo) => onFileLoad(data, fileInfo)}
+      />
       <Dashboard transactions={transactions} totalIncome={totalIncome} totalSpent={totalSpent} breakdown={breakdown}/>
     </div>
   );
