@@ -6,13 +6,12 @@ interface Props {
 
 export const Transaction: React.FC<Props> = ({ transaction }) => {
     return (
-        <li className="transaction">
+        <tr>
             {Object.keys(transaction).map((item, i) => (
-                <div key={i} className="transaction-field">
-                    <p>{item}</p>
+                <td key={i} className="transaction-field">
                     <p>{transaction[item]}</p>
-                </div>
+                </td>
             ))}
-        </li>
+        </tr>
     )
 }

@@ -7,10 +7,22 @@ interface Props {
 
 export const TransactionsList: React.FC<Props> = ({ transactions }) => {
     return (
-        <ul className="transactions-list">
-            { transactions.map((transaction, i) => (
-               <Transaction key={i} transaction={transaction} />
-            ))}
-        </ul>
+        <div>
+            <h2>Transaction List</h2>
+            <table className="transactions-table">
+                <thead>
+                    <tr>
+                        { (transactions?.length > 0) && Object.keys(transactions[0]).map((item, i) => (
+                            <th key={i}>{item}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                { transactions.map((transaction, i) => (
+                    <Transaction key={i} transaction={transaction} />
+                ))}
+                </tbody>
+            </table>
+        </div>
     )
 }

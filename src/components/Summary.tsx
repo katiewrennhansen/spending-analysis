@@ -14,7 +14,7 @@ export const Summary: React.FC<Props> = ({ totalIncome, totalSpent, breakdown })
             <div>{`Total Spent: ${totalSpent}`}</div>
             <h3>Spending Breakdown</h3>
             { Object.keys(breakdown).map((item, i) => (
-                <p key={i}>{`${item}: ${breakdown[item]}`}</p>
+                <p key={i}>{`${item}: ${Math.abs(breakdown[item])}`}</p>
             ))}
         </div>
     );
