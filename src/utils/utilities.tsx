@@ -44,3 +44,18 @@ export const excludeCategories: ExcludeValues = (transactions: Transaction[], ex
     })
     return filtered;
 }
+
+//exclude select fields from transactions array
+export const cleanData: CleanData = (transactions: Transaction[]) => {
+    let filtered = transactions.map(transaction => {
+        return {
+            'Date': transaction['Date'],
+            'Account Name': transaction['Account Name'],
+            'Description': transaction['Description'],
+            'Amount': transaction['Amount'],
+            'Transaction Type': transaction['Transaction Type'],
+            'Category': transaction['Category'],
+        }
+    })
+    return filtered;
+}

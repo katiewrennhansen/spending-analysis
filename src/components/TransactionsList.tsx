@@ -7,7 +7,7 @@ interface Props {
 
 export const TransactionsList: React.FC<Props> = ({ transactions }) => {
     return (
-        <div>
+        <div className="transactions-list">
             <h2>Transaction List</h2>
             <table className="transactions-table">
                 <thead>

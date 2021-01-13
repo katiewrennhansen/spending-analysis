@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CSVReader from 'react-csv-reader';
 import { Dashboard } from './components/Dashboard';
-import { buildBreakdown, calculateTotals, excludeCategories } from './utils/utilities'
+import { buildBreakdown, calculateTotals, excludeCategories, cleanData } from './utils/utilities'
 import './App.css';
 
 const initialTransactions: Transaction[] = [];
@@ -14,8 +14,9 @@ function App() {
 
   const onFileLoad: OnFileLoad = (data: Transaction[], fileInfo) => {
     if(data){
-      setTransactions(data)
+      setTransactions(cleanData(data))
       createSummary(data)
+      // console.log(cleanData(transactions))
     }
   }
 
@@ -39,6 +40,7 @@ function App() {
 
   useEffect(() => {
   }, [totalIncome, totalSpent, breakdown])
+
 
   return (
     <div className="App">

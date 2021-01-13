@@ -8,7 +8,7 @@ interface Props {
 
 export const Summary: React.FC<Props> = ({ totalIncome, totalSpent, breakdown }) => {
     return (
-        <div>
+        <div className="summary">
             <h2>Summary</h2>
             <div>{`Total Income: ${totalIncome}`}</div>
             <div>{`Total Spent: ${totalSpent}`}</div>

@@ -1,9 +1,9 @@
 interface Transaction {
-    // 'Account Name': string;
+    'Account Name': string;
     'Amount': string;
     'Category': string;
     'Date': string;
-    // 'Description': string;
+    'Description': string;
     // 'Labels': string;
     // 'Notes': string;
     // 'Original Description': string;
@@ -18,13 +18,15 @@ type UploadData = () => void;
 
 type OnFileLoad = (data: Transaction[], fileInfo: any) => void;
 
-type CreateSummary = (transactions: Transactions[]) => void;
+type CreateSummary = (transactions: Transaction[]) => void;
 
-type BuildBreakdown = (transactions: Transactions[]) => Breakdown;
+type BuildBreakdown = (transactions: Transaction[]) => Breakdown;
 
-type CalculateTotals = (transactions: Transactions[], type: 'credit' | 'debit') => number;
+type CalculateTotals = (transactions: Transaction[], type: 'credit' | 'debit') => number;
 
 type ExcludeValues = (transactions: Transaction[], exclude: string[]) => any;
+
+type CleanData = (transactions: Transaction[]) => Transactions[];
 
 type ObjectKeys<T> = 
     T extends object ? (keyof T)[] :

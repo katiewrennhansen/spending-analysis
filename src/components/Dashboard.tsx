@@ -1,5 +1,6 @@
 import React from 'react';
 import { TransactionsList } from './TransactionsList';
+import { BreakdownBarChart } from './BreakdownBarChart';
 import { Summary } from './Summary';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 export const Dashboard: React.FC<Props> = ({ transactions, totalIncome, totalSpent, breakdown }) => {
     return (
         <div>
+            <BreakdownBarChart transactions={transactions} breakdown={breakdown} />
             <Summary totalIncome={totalIncome} totalSpent={totalSpent} breakdown={breakdown} />
             <TransactionsList transactions={transactions} />
         </div>
