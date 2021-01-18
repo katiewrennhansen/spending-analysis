@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import * as _d3 from 'd3';
 
 interface Props {
-    transactions: Transaction[];
     breakdown: Breakdown;
 }
 
-export const BreakdownBarChart: React.FC<Props> = ({ transactions, breakdown }) => {
+export const BreakdownBarChart: React.FC<Props> = ({ breakdown }) => {
+    //clean up breakdown data to conform to bar chart
+    let cleanedBreakdown:any[] = [];
+    Object.keys(breakdown).map(key => {
+        cleanedBreakdown.push({
+            x: key,
+            y: Math.abs(breakdown[key])
+        })
+    })
+
+    useEffect(() => {
+        if(!breakdown){
+            console.log(breakdown)
+        }
+    }, [breakdown])
+
     const margin = 60;
     const width = 1000 - 2 * margin;
     const height = 600 - 2 * margin;
@@ -14,35 +28,59 @@ export const BreakdownBarChart: React.FC<Props> = ({ transactions, breakdown }) 
     const chart = svg.append('g')
                         .attr('transform', `translate(${margin}, ${margin})`);
     
+    //define yScale parameters
     const yScale = _d3.scaleLinear()
                     .range([height, 0])
-                    .domain([0, 100]);
+                    .domain([0, _d3.max(cleanedBreakdown, (b) => b.y)]);
 
+    //append y axis
     chart.append('g')
         .call(_d3.axisLeft(yScale));
-
-    const values = Object.keys(breakdown)
     
+    //define xScale parameters
     const xScale = _d3.scaleBand()
-                        .range([0, width])
-                        .domain(['Restaurants', 'Internet', 'Gas & Fuel', 'Movies & DVDs', 'Music', 'Alcohol & Bars', 'Groceries', 'Gift', 'Shipping', 'Auto Insurance', 'Laundry', 'Compost', 'Mortgage & Rent'])
+                        .rangeRound([0, width])
+                        .domain(cleanedBreakdown.map(d => d.x))
                         .padding(0.2)
+                        .align(0.5)
+                        .round(true)
 
+    //add scale amount to cleaned breakdown object
+    cleanedBreakdown.forEach(b => {
+        b.scale = xScale(b.x)
+    })
+    
+    //append x axis
     chart.append('g')
         .attr('transform', `translate(0, ${height})`)
         .call(_d3.axisBottom(xScale));
+
+    //create bars
+    const bar = chart.selectAll('group')
+                        .data(cleanedBreakdown)
+                        .enter()
     
-    chart.selectAll()
-        .data(values)
-        .enter()
-        .append('rect')
-        // .attr('x', (s) => xScale(breakdown[s]))
-        // .attr('y', (s) => yScale(s.value))
-        // .attr('height', (s) => height - yScale(s.value))
+    //append rect elements for each breakdown item
+    bar.append('rect')
+        .style('fill', 'purple')
+        .attr('x', (s) => s.scale)
+        .attr('y', (s) => yScale(s.y))
+        .attr('height', (s) => height - yScale(s.y))
         .attr('width', xScale.bandwidth())
+    
+    //append text elements labelling total spent for each breakdown item
+    bar.append('text')
+        .attr('x', (s) => s.scale)
+        .attr('y', (s) => yScale(s.y) - 5)
+        .text((d) => `$${(d.y).toFixed(2)}`)
+        .attr('font-size', '10px')
    
     return (
         <div className='bar-chart'>
+            { cleanedBreakdown?.length
+                ? null
+                : <div>Sorry, no data currently available.</div>
+            }
             <svg className='container' width={1000} height={600}></svg>
         </div>
     );

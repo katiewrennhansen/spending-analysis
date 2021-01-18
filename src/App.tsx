@@ -6,6 +6,7 @@ import './App.css';
 
 const initialTransactions: Transaction[] = [];
 
+
 function App() {
   const [transactions, setTransactions] = useState(initialTransactions);
   const [totalIncome, setTotalIncome] = useState(0)
@@ -16,7 +17,6 @@ function App() {
     if(data){
       setTransactions(cleanData(data))
       createSummary(data)
-      // console.log(cleanData(transactions))
     }
   }
 
