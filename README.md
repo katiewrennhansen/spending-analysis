@@ -21,3 +21,4 @@ Any additional fields may be added within the CSV however they will not be inclu
 ## Tech Stack
 * React
 * TypeScript 
+* d3

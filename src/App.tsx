@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import CSVReader from 'react-csv-reader';
 import { Dashboard } from './components/Dashboard';
-import { buildBreakdown, calculateTotals, excludeCategories, cleanData } from './utils/utilities'
+import { Sidebar } from './components/Sidebar';
+import { Header } from './components/Header';
+import { Home } from './components/Home';
+import { TransactionsList } from './components/TransactionsList';
+import { 
+  buildBreakdown, 
+  calculateTotals, 
+  excludeCategories, 
+  cleanData 
+} from './utils/utilities';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 import './App.css';
 
 const initialTransactions: Transaction[] = [];
 
 
-function App() {
+export const App: React.FC<{}> = () => {
   const [transactions, setTransactions] = useState(initialTransactions);
   const [totalIncome, setTotalIncome] = useState(0)
   const [totalSpent, setTotalSpent] = useState(0)
@@ -43,14 +56,29 @@ function App() {
 
 
   return (
-    <div className="App">
-      <h1>Spend Analyzer</h1>
-      <CSVReader
-        parserOptions={{ header: true }}
-        onFileLoaded={(data, fileInfo) => onFileLoad(data, fileInfo)}
-      />
-      <Dashboard transactions={transactions} totalIncome={totalIncome} totalSpent={totalSpent} breakdown={breakdown}/>
-    </div>
+    <Router>
+      <div className="main">
+        <Header />
+
+        <div className="main-container">
+          <Sidebar />
+
+          <main className="dashboard-container">
+            <Switch>
+                <Route path='/breakdown'>
+                  <Dashboard totalIncome={totalIncome} totalSpent={totalSpent} breakdown={breakdown}/>
+                </Route>
+                <Route path='/transactions'>
+                  <TransactionsList transactions={transactions} />
+                </Route>
+                <Route exact path="/">
+                  <Home onFileLoad={onFileLoad} transactions={transactions}/>
+                </Route>
+              </Switch>
+            </main>
+          </div>
+      </div>
+    </Router>
   );
 }
 

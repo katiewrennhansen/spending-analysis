@@ -1,7 +1,124 @@
-.App {
-  padding: 50px;
+/* GENERAL SYLES */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  color: var(--main-bg-color);
 }
 
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid var(--main-bg-color);
+}
+
+td p {
+  font-size: 12px;
+}
+
+th, td {
+  padding: 2px 4px;
+}
+
+table tr:nth-child(even) {
+  background-color: var(--light-bg-color);
+}
+
+th {
+  background-color: var(--main-bg-color);
+  color: #fff;
+  text-align: left;
+  padding: 8px 4px;
+  font-size: 14px;
+}
+
+svg.spending-breakdown {
+  border: 2px solid var(--main-bg-color);
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+
+/* HEADER */
+.header {
+  padding: 10px 30px 40px;
+}
+
+.header h1 {
+  color: var(--main-accent-color);
+  font-family: 'Yusei Magic', sans-serif;
+}
+
+.custom-shape-divider {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+
+/* LAYOUT */
+.main-container {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+}
+
+
+/* DASHBOARD */
+.dashboard-container {
+  padding: 30px;
+}
+
+
+/* SIDEBAR */
+.sidebar {
+  background: var(--light-bg-color);
+  border-top-right-radius: 5px;
+  padding: 30px 10px 30px 30px;
+  min-height: 80vh;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar .sidebar-item {
+  margin: 2px 0;
+}
+
+.sidebar .sidebar-item a {
+  text-decoration: none;
+  display: block;
+  width: 80%; 
+}
+
+.sidebar .sidebar-item {
+  box-sizing: border-box;
+    width: 200px;
+    height: 3em;
+    font-size: 16px;
+    border-radius: 0.5em;
+    margin: 0.5em;
+    box-shadow: 0 0 1em rgba(0,0,0,0.2);
+    color: #fff;
+    line-height: 3em;
+    transition: 0.3s;
+    cursor: pointer;
+    background: linear-gradient(to right, var(--light-accent-color), var(--main-accent-color));
+    padding-left: 10%;
+    transform: perspective(400px) rotateY(10deg);
+}
+
+.sidebar .sidebar-item:hover  {
+  transform: perspective(300px) rotateY(30deg);
+}
+
+/* TRANSACTION LIST */
 .transactions-list {
   list-style: none;
   padding: 0;
@@ -14,30 +131,4 @@
 
 .transaction-field {
   width: 400px;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-table, th, td {
-  border: 1px solid rgb(121, 121, 121);
-}
-
-th, td {
-  padding: 2px 4px;
-}
-
-table tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-th {
-  background-color: rgb(68, 68, 68);
-  color: #fff;
-}
-
-svg {
-  border: 2px solid #000;
-  margin: 10px 0;
 }
