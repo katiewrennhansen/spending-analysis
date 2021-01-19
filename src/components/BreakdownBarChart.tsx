@@ -60,7 +60,7 @@ export const BreakdownBarChart: React.FC<Props> = ({ breakdown }) => {
             
             //append rect elements for each breakdown item
             bar.append('rect')
-                .style('fill', '#9003fc')
+                .style('fill', '#00d9ad')
                 .style('rx', '5')
                 .attr('x', (s) => s.scale)
                 .attr('y', (s) => yScale(s.y))

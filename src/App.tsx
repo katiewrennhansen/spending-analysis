@@ -8,7 +8,8 @@ import {
   buildBreakdown, 
   calculateTotals, 
   excludeCategories, 
-  cleanData 
+  cleanData,
+  buildDateRange
 } from './utils/utilities';
 import {
   BrowserRouter as Router,
@@ -19,12 +20,14 @@ import './App.css';
 
 const initialTransactions: Transaction[] = [];
 
+const emptyDates: string[] = [];
 
 export const App: React.FC<{}> = () => {
   const [transactions, setTransactions] = useState(initialTransactions);
   const [totalIncome, setTotalIncome] = useState(0)
   const [totalSpent, setTotalSpent] = useState(0)
   const [breakdown, setBreakdown] = useState({})
+  const [dates, setDates] = useState(emptyDates)
 
   const onFileLoad: OnFileLoad = (data: Transaction[], fileInfo) => {
     if(data){
@@ -49,11 +52,10 @@ export const App: React.FC<{}> = () => {
       //set category breakdown
       let newBreakdown: Breakdown = buildBreakdown(noTransfers)
       setBreakdown(newBreakdown)
+
+      let dateRange: string[] = buildDateRange(transactions)
+      setDates(dateRange);
   }
-
-  useEffect(() => {
-  }, [totalIncome, totalSpent, breakdown])
-
 
   return (
     <Router>
@@ -66,13 +68,25 @@ export const App: React.FC<{}> = () => {
           <main className="dashboard-container">
             <Switch>
                 <Route path='/breakdown'>
-                  <Dashboard totalIncome={totalIncome} totalSpent={totalSpent} breakdown={breakdown}/>
+                  <Dashboard 
+                    breakdown={breakdown} 
+                    dates={dates}
+                  />
                 </Route>
                 <Route path='/transactions'>
-                  <TransactionsList transactions={transactions} />
+                  <TransactionsList 
+                    transactions={transactions} 
+                    dates={dates}
+                  />
                 </Route>
                 <Route exact path="/">
-                  <Home onFileLoad={onFileLoad} transactions={transactions}/>
+                  <Home 
+                    onFileLoad={onFileLoad} 
+                    transactions={transactions} 
+                    totalIncome={totalIncome} 
+                    totalSpent={totalSpent}
+                    dates={dates}
+                  />
                 </Route>
               </Switch>
             </main>

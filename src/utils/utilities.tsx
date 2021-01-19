@@ -59,3 +59,31 @@ export const cleanData: CleanData = (transactions: Transaction[]) => {
     })
     return filtered;
 }
+
+//build array containing sorted transactions dates
+export const buildDateRange: BuildDateRange = (data: Transaction[]) => {
+    //create array containing all transaction dates
+    let dates: any[] = [];
+    data.map(d => dates.push(new Date(d['Date'])))
+    dates.sort((a, b) => a - b);
+
+    //clean up date formatting in MM/DD/YYYY format
+    let cleanedDates: string[] = [];
+    dates.map(date => {
+      //handle year
+      let year = date.getFullYear();
+
+      //handle month
+      let month = (1 + date.getMonth()).toString();
+      month = month.length > 1 ? month : '0' + month;
+
+      //handle day
+      let day = date.getDate().toString();
+      day = day.length > 1 ? day : '0' + day;
+      
+      //push formatted date into new array
+      cleanedDates.push(`${month}/${day}/${year}`);
+    })
+
+    return cleanedDates;
+  }

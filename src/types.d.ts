@@ -18,6 +18,8 @@ type UploadData = () => void;
 
 type OnFileLoad = (data: Transaction[], fileInfo: any) => void;
 
+type BuildDateRange = (data: Transaction[]) => any[];
+
 type CreateSummary = (transactions: Transaction[]) => void;
 
 type BuildBreakdown = (transactions: Transaction[]) => Breakdown;

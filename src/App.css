@@ -5,11 +5,14 @@ body {
   color: var(--main-bg-color);
 }
 
-table {
-  border-collapse: collapse;
+h1, h2, h3, .sidebar a {
+  font-family: 'Yusei Magic', sans-serif;
 }
 
-table, th, td {
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 5px;
   border: 1px solid var(--main-bg-color);
 }
 
@@ -18,7 +21,7 @@ td p {
 }
 
 th, td {
-  padding: 2px 4px;
+  padding: 2px 5px;
 }
 
 table tr:nth-child(even) {
@@ -46,8 +49,7 @@ svg.spending-breakdown {
 }
 
 .header h1 {
-  color: var(--main-accent-color);
-  font-family: 'Yusei Magic', sans-serif;
+  color: var(--main-bg-color);
 }
 
 .custom-shape-divider {
@@ -67,6 +69,16 @@ svg.spending-breakdown {
   grid-template-columns: 260px 1fr;
 }
 
+/* HOME */
+.home .home-summary h2 {
+  margin: 30px 0 0;
+}
+
+.home .spending-summary {
+  display: grid;
+  grid-template-columns: 200px 200px;
+  grid-gap: 10px;
+}
 
 /* DASHBOARD */
 .dashboard-container {
@@ -75,6 +87,11 @@ svg.spending-breakdown {
 
 
 /* SIDEBAR */
+.fa-home, .fa-bar-chart, .fa-list {
+  font-size: 14px;
+  margin-bottom: 1px;
+}
+
 .sidebar {
   background: var(--light-bg-color);
   border-top-right-radius: 5px;
@@ -97,25 +114,22 @@ svg.spending-breakdown {
   width: 80%; 
 }
 
-.sidebar .sidebar-item {
+.sidebar .sidebar-item a{
   box-sizing: border-box;
     width: 200px;
-    height: 3em;
     font-size: 16px;
-    border-radius: 0.5em;
-    margin: 0.5em;
+    border-radius: 5px;
+    padding: 10px 12px;
+    margin: 10px 0;
     box-shadow: 0 0 1em rgba(0,0,0,0.2);
     color: #fff;
-    line-height: 3em;
     transition: 0.3s;
     cursor: pointer;
-    background: linear-gradient(to right, var(--light-accent-color), var(--main-accent-color));
-    padding-left: 10%;
-    transform: perspective(400px) rotateY(10deg);
+    background: linear-gradient(to right, var(--main-accent-color), var(--light-accent-color));
 }
 
-.sidebar .sidebar-item:hover  {
-  transform: perspective(300px) rotateY(30deg);
+.sidebar .sidebar-item a:hover  {
+  transform: translateX(-10px);
 }
 
 /* TRANSACTION LIST */
