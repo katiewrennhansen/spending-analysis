@@ -5,7 +5,11 @@ body {
   color: var(--main-bg-color);
 }
 
-h1, h2, h3, .sidebar a {
+h1, 
+h2, 
+h3, 
+.sidebar a, 
+.csv-input {
   font-family: 'Yusei Magic', sans-serif;
 }
 
@@ -42,6 +46,13 @@ svg.spending-breakdown {
   border-radius: 5px;
 }
 
+.card {
+  background: var(--light-bg-color);
+  border-radius: 4px;
+  text-align: center;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+}
 
 /* HEADER */
 .header {
@@ -71,13 +82,57 @@ svg.spending-breakdown {
 
 /* HOME */
 .home .home-summary h2 {
-  margin: 30px 0 0;
+  margin: 30px 0 20px;
+}
+
+.csv-upload {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+}
+
+.csv-input {
+  color: #fff;
+  width: 110px;
+}
+
+.csv-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.csv-input::before {
+  content: 'Upload File';
+  display: inline-block;
+  background: linear-gradient(to right, var(--main-accent-color), var(--light-accent-color));
+  color: #fff;
+  border-radius: 4px;
+  padding: 8px 16px;
+  outline: none;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 16px;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.15);
+}
+
+.csv-input::avtive {
+  outline: none;
 }
 
 .home .spending-summary {
   display: grid;
-  grid-template-columns: 200px 200px;
-  grid-gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 25px;
+  max-width: 1000px;
+}
+
+
+.spending-summary .card .red {
+  color: rgb(192, 4, 4);
+  font-weight: 600;
+}
+
+.spending-summary .card .green {
+  color: rgb(5, 146, 0);
+  font-weight: 600;
 }
 
 /* DASHBOARD */
@@ -85,18 +140,25 @@ svg.spending-breakdown {
   padding: 30px;
 }
 
-
-/* SIDEBAR */
-.fa-home, .fa-bar-chart, .fa-list {
-  font-size: 14px;
-  margin-bottom: 1px;
+.dashboard-summary {
+  margin-top: 40px;
 }
 
+.dashboard-container .summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 25px;
+  max-width: 900px;
+}
+
+
+/* SIDEBAR */
 .sidebar {
   background: var(--light-bg-color);
   border-top-right-radius: 5px;
   padding: 30px 10px 30px 30px;
   min-height: 80vh;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.15);
 }
 
 .sidebar ul {
@@ -112,24 +174,26 @@ svg.spending-breakdown {
   text-decoration: none;
   display: block;
   width: 80%; 
-}
-
-.sidebar .sidebar-item a{
   box-sizing: border-box;
-    width: 200px;
-    font-size: 16px;
-    border-radius: 5px;
-    padding: 10px 12px;
-    margin: 10px 0;
-    box-shadow: 0 0 1em rgba(0,0,0,0.2);
-    color: #fff;
-    transition: 0.3s;
-    cursor: pointer;
-    background: linear-gradient(to right, var(--main-accent-color), var(--light-accent-color));
+  width: 200px;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 10px 12px;
+  margin: 10px 0;
+  box-shadow: 0 0 1em rgba(0,0,0,0.2);
+  color: #fff;
+  transition: 0.3s;
+  cursor: pointer;
+  background: linear-gradient(to right, var(--main-accent-color), var(--light-accent-color));
 }
 
 .sidebar .sidebar-item a:hover  {
   transform: translateX(-10px);
+}
+
+.fa-home, .fa-bar-chart, .fa-list {
+  font-size: 14px;
+  margin-bottom: 1px;
 }
 
 /* TRANSACTION LIST */

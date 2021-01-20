@@ -19,9 +19,9 @@ export const BreakdownBarChart: React.FC<Props> = ({ breakdown }) => {
         if(!breakdown){
             return;
         } else {
-            const margin = 60;
-            const width = 1000 - 2 * margin;
-            const height = 600 - 2 * margin;
+            const margin = 100;
+            const width = 900 - 2 * margin;
+            const height = 500 - 2 * margin;
             const svg = _d3.select('svg.spending-breakdown');
             const chart = svg.append('g')
                                 .attr('transform', `translate(${margin}, ${margin})`);
@@ -51,7 +51,12 @@ export const BreakdownBarChart: React.FC<Props> = ({ breakdown }) => {
             //append x axis
             chart.append('g')
                 .attr('transform', `translate(0, ${height})`)
-                .call(_d3.axisBottom(xScale));
+                .call(_d3.axisBottom(xScale))
+                .selectAll("text")	
+                    .style("text-anchor", "end")
+                    .attr("dx", "-.8em")
+                    .attr("dy", ".15em")
+                    .attr("transform", "rotate(-65)");
 
             //create bars
             const bar = chart.selectAll('group')
@@ -82,7 +87,7 @@ export const BreakdownBarChart: React.FC<Props> = ({ breakdown }) => {
                 ? null
                 : <div>Sorry, no data currently available.</div>
             }
-            <svg className='spending-breakdown' width={1000} height={600}></svg>
+            <svg className='spending-breakdown' width={900} height={500}></svg>
         </div>
     );
   }

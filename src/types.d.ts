@@ -4,10 +4,11 @@ interface Transaction {
     'Category': string;
     'Date': string;
     'Description': string;
-    // 'Labels': string;
-    // 'Notes': string;
-    // 'Original Description': string;
     'Transaction Type': 'credit' | 'debit';
+}
+
+interface Summary {
+    [key: string]: number;
 }
 
 interface Breakdown {
@@ -29,6 +30,8 @@ type CalculateTotals = (transactions: Transaction[], type: 'credit' | 'debit') =
 type ExcludeValues = (transactions: Transaction[], exclude: string[]) => any;
 
 type CleanData = (transactions: Transaction[]) => Transactions[];
+
+type BuildSummary = (transactions: Transaction[]) => Summary;
 
 type ObjectKeys<T> = 
     T extends object ? (keyof T)[] :

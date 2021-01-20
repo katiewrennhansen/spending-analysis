@@ -86,4 +86,26 @@ export const buildDateRange: BuildDateRange = (data: Transaction[]) => {
     })
 
     return cleanedDates;
-  }
+}
+
+
+
+export const buildSummary: BuildSummary = (noTransfers: Transaction[]) => {
+    let summary: Summary = {};
+
+    //calculare total income
+    let totalIncome = calculateTotals(noTransfers, 'credit');
+    summary['totalIncome'] = totalIncome;
+
+    //calculate total amount speant
+    let totalSpent = calculateTotals(noTransfers, 'debit');
+    summary['totalSpent'] = totalSpent;
+
+    //calculare percent saved
+    summary['percentSaved'] = Math.round(((summary.totalIncome - summary.totalSpent) / summary.totalIncome) * 100);
+
+    //calculate total saved
+    summary['totalSaved'] = totalIncome - totalSpent;
+
+    return summary;
+}
