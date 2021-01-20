@@ -6,7 +6,6 @@ import { Home } from './components/Home';
 import { TransactionsList } from './components/TransactionsList';
 import { 
   buildBreakdown, 
-  calculateTotals, 
   excludeCategories, 
   cleanData,
   buildDateRange,
@@ -24,7 +23,7 @@ const initialTransactions: Transaction[] = [];
 const emptyDates: string[] = [];
 
 export const App: React.FC<{}> = () => {
-  const [transactions, setTransactions] = useState(initialTransactions);
+  const [transactions, setTransactions] = useState(initialTransactions)
   const [breakdown, setBreakdown] = useState({})
   const [summary, setSummary] = useState({})
   const [dates, setDates] = useState(emptyDates)
