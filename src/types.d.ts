@@ -8,7 +8,7 @@ interface Transaction {
 }
 
 interface Summary {
-    [key: string]: number;
+    [key: string]: any;
 }
 
 interface Breakdown {
@@ -32,6 +32,8 @@ type ExcludeValues = (transactions: Transaction[], exclude: string[]) => any;
 type CleanData = (transactions: Transaction[]) => Transactions[];
 
 type BuildSummary = (transactions: Transaction[]) => Summary;
+
+type BuildMonthly = (transactions: Transaction[], category: any) => any[];
 
 type ObjectKeys<T> = 
     T extends object ? (keyof T)[] :

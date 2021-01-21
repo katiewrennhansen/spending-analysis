@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faChartBar, faList } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faChartBar, faList, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
 export const Sidebar: React.FC = () => {
     return (
@@ -15,6 +15,11 @@ export const Sidebar: React.FC = () => {
                 <li className="sidebar-item">
                     <NavLink to='/breakdown'>
                         <FontAwesomeIcon icon={faChartBar} /> Spending Breakdown
+                    </NavLink>
+                </li>
+                <li className="sidebar-item">
+                    <NavLink to='/monthly'>
+                        <FontAwesomeIcon icon={faCalendarAlt} /> Monthly Data
                     </NavLink>
                 </li>
                 <li className="sidebar-item">

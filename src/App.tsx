@@ -4,6 +4,8 @@ import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { Home } from './components/Home';
 import { TransactionsList } from './components/TransactionsList';
+import { Monthly } from './components/Monthly';
+
 import { 
   buildBreakdown, 
   excludeCategories, 
@@ -68,6 +70,13 @@ export const App: React.FC<{}> = () => {
                     breakdown={breakdown} 
                     dates={dates}
                     summary={summary}
+                  />
+                </Route>
+                <Route path='/monthly'>
+                  <Monthly 
+                    transactions={transactions} 
+                    dates={dates}
+                    breakdown={breakdown} 
                   />
                 </Route>
                 <Route path='/transactions'>

@@ -40,7 +40,8 @@ th {
   font-size: 14px;
 }
 
-svg.spending-breakdown {
+svg.spending-breakdown,
+svg.monthly-breakdown {
   border: 2px solid var(--main-bg-color);
   margin: 10px 0;
   border-radius: 5px;

@@ -8,7 +8,6 @@ interface Props {
 export const Summary: React.FC<Props> = ({ breakdown, summary }) => {
     return (
         <div className="dashboard-summary">
-            <h3>Spending Breakdown</h3>
             <div className="summary">
                 { Object.keys(breakdown)
                     .sort((a, b) => breakdown[a] - breakdown[b])
