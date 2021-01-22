@@ -21,7 +21,6 @@ import {
 import './App.css';
 
 const initialTransactions: Transaction[] = [];
-
 const emptyDates: string[] = [];
 
 export const App: React.FC<{}> = () => {
@@ -31,7 +30,7 @@ export const App: React.FC<{}> = () => {
   const [dates, setDates] = useState(emptyDates)
   const [file, setFile] = useState('')
 
-  const onFileLoad: OnFileLoad = (data: Transaction[], fileInfo) => {
+  const onFileLoad = (data: Transaction[], fileInfo: any): void => {
     if(data){
       setFile(fileInfo.name)
       setTransactions(cleanData(data))
@@ -39,19 +38,19 @@ export const App: React.FC<{}> = () => {
     }
   }
 
-  const createSummary: CreateSummary = (transactions: Transaction[]) => {
+  const createSummary = (transactions: Transaction[]): void => {
       // //remove all values with category of transfer from array
       let toExclude: string[] = ['Transfer', 'Credit Card Payment']
       let noTransfers = excludeCategories(transactions, toExclude)
 
       //set category breakdown
-      let newBreakdown: Breakdown = buildBreakdown(noTransfers)
+      let newBreakdown = buildBreakdown(noTransfers)
       setBreakdown(newBreakdown)
 
-      let dateRange: string[] = buildDateRange(transactions)
+      let dateRange = buildDateRange(transactions)
       setDates(dateRange);
 
-      let newSummary: Summary = buildSummary(noTransfers);
+      let newSummary = buildSummary(noTransfers);
       setSummary(newSummary)
   }
 

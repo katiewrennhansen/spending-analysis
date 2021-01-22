@@ -7,7 +7,7 @@ interface Props {
 
 export const BarChart: React.FC<Props> = ({ transactions }) => {
     //build object for groceries over time
-    const breakdownMonth: BuildMonthly = (transactions: Transaction[], category) => {
+    const breakdownMonth = (transactions: Transaction[], category: any): any[] => {
         //create new object 
         let summary: Summary = {};
         let graphData: any[] = [];
@@ -46,13 +46,14 @@ export const BarChart: React.FC<Props> = ({ transactions }) => {
         if(!transactions){
             return;
         } else {
-
             const monthlyBreakdown = breakdownMonth(transactions, 'Groceries');
-
             const margin = 100;
             const width = 900 - 2 * margin;
             const height = 500 - 2 * margin;
             const svg = _d3.select('svg.monthly-breakdown');
+
+            svg.selectAll('*').remove();
+
             const chart = svg.append('g')
                                 .attr('transform', `translate(${margin}, ${margin})`);
             

@@ -17,7 +17,7 @@ export const Dashboard: React.FC<Props> = ({ breakdown, dates, summary }) => {
                     <BreakdownBarChart breakdown={breakdown} />
                     <Summary breakdown={breakdown} summary={summary}/>
                 </div>
-                : <p>There is no data available. Please upload a CSV to view spending summary.</p>
+                : <p>There is no data available. Please upload a CSV to view spending breakdown.</p>
             }
         </div>
     )

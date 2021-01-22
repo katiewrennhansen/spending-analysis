@@ -1,11 +1,8 @@
 import React from 'react';
 import CSVReader from 'react-csv-reader';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
-
 
 interface Props {
-    onFileLoad: OnFileLoad;
+    onFileLoad: (transactions: Transaction[], fileInfo: any) => void;
     transactions: Transaction[];
     dates: string[];
     summary: Summary;

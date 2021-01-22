@@ -8,11 +8,11 @@ interface Props {
 }
 
 export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => {
-    const [activeCat, setActiveCat] = useState();
     const categories = Object.keys(breakdown);
+    const [activeCat, setActiveCat] = useState(categories[0]);
 
     //build object for groceries over time
-    const breakdownMonth: BuildMonthly = (transactions: Transaction[], category) => {
+    const breakdownMonth = (transactions: Transaction[], category: any): any[] => {
         setActiveCat(category);
 
         //create new object 
@@ -42,7 +42,7 @@ export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => 
             })
         })
 
-        //reverse data 
+        //reverse data so it sort oldest to most recent
         let data = graphData.reverse();
 
         //return data array
@@ -61,6 +61,9 @@ export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => 
             const width = 900 - 2 * margin;
             const height = 500 - 2 * margin;
             const svg = _d3.select('svg.monthly-breakdown');
+
+            svg.selectAll('*').remove();
+
             const chart = svg.append('g')
                                 .attr('transform', `translate(${margin}, ${margin})`);
             
@@ -116,30 +119,36 @@ export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => 
                 .attr('y', (s) => yScale(s.y) - 5)
                 .text((d) => `$${(d.y).toFixed(2)}`)
                 .attr('font-size', '10px')
-                }
+        }
     }, [transactions, activeCat])
 
     return (
-        <div>
+        <div className="monthly-chart">
             <h2>Monthly Data{dates?.length ? `: ${dates[0]} - ${dates[dates.length - 2]}` : ''}</h2>
 
             { transactions?.length
-                ? <div>
-                    <h3>{activeCat}</h3>
-                    <select onChange={e => {
-                        const target = e.target as HTMLSelectElement;
-                        const cat: any = target.value;
-                        setActiveCat(cat)
-                    }} 
-                    value={activeCat}>
-                        { categories.map(cat => (
-                            <option key={cat} value={cat}>{cat}</option>
-                        ))}
-                    </select>
+                ? <div> 
+                    <div>
+                        <div className="select-container">
+                            <select onChange={e => {
+                                const target = e.target as HTMLSelectElement;
+                                const cat: any = target.value;
+                                setActiveCat(cat)
+                            }} 
+                            value={activeCat}
+                            className="monthly-dropdown">
+                                { categories.map(cat => (
+                                    <option key={cat} value={cat}>{cat}</option>
+                                ))}
+                            </select>
+                            <span className="focus"></span>
+                        </div>
+                        <h3>{activeCat}</h3>
+                    </div>
+                    <svg className='monthly-breakdown' width={900} height={500}></svg>
                 </div>
-                : <div>Sorry, no data currently available.</div>
+                : <p>There is no data available. Please upload a CSV to view monthly spending summary.</p>
             }
-            <svg className='monthly-breakdown' width={900} height={500}></svg>
         </div>
     )
 }

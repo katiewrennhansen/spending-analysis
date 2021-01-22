@@ -71,14 +71,7 @@ export const BreakdownBarChart: React.FC<Props> = ({ breakdown }) => {
                 .attr('y', (s) => yScale(s.y))
                 .attr('height', (s) => height - yScale(s.y))
                 .attr('width', xScale.bandwidth())
-            
-            //append text elements labelling total spent for each breakdown item
-            bar.append('text')
-                .attr('x', (s) => s.scale)
-                .attr('y', (s) => yScale(s.y) - 5)
-                .text((d) => `$${(d.y).toFixed(2)}`)
-                .attr('font-size', '10px')
-                }
+        }
     }, [breakdown])
    
     return (

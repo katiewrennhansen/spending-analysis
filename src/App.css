@@ -1,4 +1,10 @@
 /* GENERAL SYLES */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
@@ -196,6 +202,58 @@ svg.monthly-breakdown {
   font-size: 14px;
   margin-bottom: 1px;
 }
+
+/* MONTHLY */
+select.monthly-dropdown {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+  outline: none;
+}
+
+.select-container {
+  max-width: 300px;
+  border: 2px solid var(--main-bg-color);
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1.1;
+  position: relative;
+  font-family: Roboto, sans-serif;
+}
+
+.select-container:after {
+  content: "";
+  width: 14px;
+  height: 8px;
+  background-color: var(--main-bg-color);
+  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+  position: absolute;
+  top: 13px;
+  right: 10px;
+}
+
+select:focus + .focus {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid var(--main-accent-color);
+  border-radius: inherit;
+}
+
+.monthly-chart h3 {
+  padding-top: 30px;
+}
+
 
 /* TRANSACTION LIST */
 .transactions-list {

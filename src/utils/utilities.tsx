@@ -1,5 +1,5 @@
 //build category breakdown
-export const buildBreakdown: BuildBreakdown = (transactions: Transaction[]) => {
+export const buildBreakdown = (transactions: Transaction[]): Breakdown => {
     let categories: string[] = [];
     let breakdown: Breakdown = {};
 
@@ -25,7 +25,7 @@ export const buildBreakdown: BuildBreakdown = (transactions: Transaction[]) => {
   } 
 
 //caculate total credit/debit on account per month
-export const calculateTotals: CalculateTotals = (transactions: Transaction[], type: 'credit' | 'debit')  => {
+export const calculateTotals = (transactions: Transaction[], type: 'credit' | 'debit'): number  => {
     let totalSpent: number = 0;
     transactions.map(transaction => {
         if(transaction['Transaction Type'] === type){
@@ -36,7 +36,7 @@ export const calculateTotals: CalculateTotals = (transactions: Transaction[], ty
 }
 
 //exclude select categories from transactions array
-export const excludeCategories: ExcludeValues = (transactions: Transaction[], exclude: string[]) => {
+export const excludeCategories = (transactions: Transaction[], exclude: string[]): any => {
     let filtered = transactions.filter(transaction => {
         if(!exclude.includes(transaction['Category'])){
             return transaction;
@@ -46,7 +46,7 @@ export const excludeCategories: ExcludeValues = (transactions: Transaction[], ex
 }
 
 //exclude select fields from transactions array
-export const cleanData: CleanData = (transactions: Transaction[]) => {
+export const cleanData = (transactions: Transaction[]): Transaction[] => {
     let filtered = transactions.map(transaction => {
         return {
             'Date': transaction['Date'],
@@ -61,7 +61,7 @@ export const cleanData: CleanData = (transactions: Transaction[]) => {
 }
 
 //build array containing sorted transactions dates
-export const buildDateRange: BuildDateRange = (data: Transaction[]) => {
+export const buildDateRange = (data: Transaction[]): any[] => {
     //create array containing all transaction dates
     let dates: any[] = [];
     data.map(d => dates.push(new Date(d['Date'])))
@@ -90,7 +90,7 @@ export const buildDateRange: BuildDateRange = (data: Transaction[]) => {
 
 
 
-export const buildSummary: BuildSummary = (noTransfers: Transaction[]) => {
+export const buildSummary = (noTransfers: Transaction[]): Summary => {
     let summary: Summary = {};
 
     //calculare total income
