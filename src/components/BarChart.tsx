@@ -3,18 +3,11 @@ import * as _d3 from 'd3';
 
 interface Props {
     transactions: Transaction[];
-    dates: string[];
-    breakdown: Breakdown;
 }
 
-export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => {
-    const [activeCat, setActiveCat] = useState();
-    const categories = Object.keys(breakdown);
-
+export const BarChart: React.FC<Props> = ({ transactions }) => {
     //build object for groceries over time
     const breakdownMonth: BuildMonthly = (transactions: Transaction[], category) => {
-        setActiveCat(category);
-
         //create new object 
         let summary: Summary = {};
         let graphData: any[] = [];
@@ -49,13 +42,12 @@ export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => 
         return data;
     }
 
-
-
     useEffect(() => {
         if(!transactions){
             return;
         } else {
-            const monthlyBreakdown = breakdownMonth(transactions, activeCat);
+
+            const monthlyBreakdown = breakdownMonth(transactions, 'Groceries');
 
             const margin = 100;
             const width = 900 - 2 * margin;
@@ -117,29 +109,9 @@ export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => 
                 .text((d) => `$${(d.y).toFixed(2)}`)
                 .attr('font-size', '10px')
                 }
-    }, [transactions, activeCat])
+    }, [transactions])
 
     return (
-        <div>
-            <h2>Monthly Data{dates?.length ? `: ${dates[0]} - ${dates[dates.length - 2]}` : ''}</h2>
-
-            { transactions?.length
-                ? <div>
-                    <h3>{activeCat}</h3>
-                    <select onChange={e => {
-                        const target = e.target as HTMLSelectElement;
-                        const cat: any = target.value;
-                        setActiveCat(cat)
-                    }} 
-                    value={activeCat}>
-                        { categories.map(cat => (
-                            <option key={cat} value={cat}>{cat}</option>
-                        ))}
-                    </select>
-                </div>
-                : <div>Sorry, no data currently available.</div>
-            }
-            <svg className='monthly-breakdown' width={900} height={500}></svg>
-        </div>
+        <svg className='bar-chart' width={900} height={500}></svg>
     )
 }
