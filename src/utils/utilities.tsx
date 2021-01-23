@@ -4,7 +4,8 @@ export const buildBreakdown = (transactions: Transaction[]): Breakdown => {
     let breakdown: Breakdown = {};
 
     //build array of categories
-    transactions.map(transaction => (!categories.includes(transaction['Category'])) ? categories.push(transaction['Category']) : null)
+    transactions
+        .map(transaction => (!categories.includes(transaction['Category'])) ? categories.push(transaction['Category']) : null)
 
     //break out spending into cateogries
     categories.forEach(category => {
@@ -12,13 +13,13 @@ export const buildBreakdown = (transactions: Transaction[]): Breakdown => {
         transactions
             .filter(transaction => transaction['Category'] === category)
             .map(transaction => {
-                if(transaction['Transaction Type'] === 'credit') breakdown[category] += Number(transaction['Amount'])
-                else breakdown[category] -= Number(transaction['Amount'])
+                if(transaction['Transaction Type'] === 'credit') breakdown[category] += Number(transaction['Amount']);
+                else breakdown[category] -= Number(transaction['Amount']);
             })
         
-        let totalValue = Number(breakdown[category].toFixed(2))
+        let totalValue = Number(breakdown[category].toFixed(2));
         if(totalValue < 0) breakdown[category] = totalValue;
-        else delete breakdown[category]
+        else delete breakdown[category];
     })
 
     return breakdown;
@@ -28,8 +29,10 @@ export const buildBreakdown = (transactions: Transaction[]): Breakdown => {
 export const calculateTotals = (transactions: Transaction[], type: 'credit' | 'debit'): number  => {
     let totalSpent: number = 0;
     transactions.map(transaction => {
+        //filter for all transaction of set type
         if(transaction['Transaction Type'] === type){
-            totalSpent += Number(transaction['Amount'])
+            //add to totalSpent
+            totalSpent += Number(transaction['Amount']);
         }
     })
     return Number(totalSpent.toFixed(2));
@@ -38,6 +41,7 @@ export const calculateTotals = (transactions: Transaction[], type: 'credit' | 'd
 //exclude select categories from transactions array
 export const excludeCategories = (transactions: Transaction[], exclude: string[]): any => {
     let filtered = transactions.filter(transaction => {
+        //only return transaction if it does not contain category to exclude
         if(!exclude.includes(transaction['Category'])){
             return transaction;
         }
@@ -48,13 +52,15 @@ export const excludeCategories = (transactions: Transaction[], exclude: string[]
 //exclude select fields from transactions array
 export const cleanData = (transactions: Transaction[]): Transaction[] => {
     let filtered = transactions.map(transaction => {
+        //check if each field exists, if so retun value, else return empty string
+        //transaction type must be either debit/credit
         return {
-            'Date': transaction['Date'],
-            'Account Name': transaction['Account Name'],
-            'Description': transaction['Description'],
-            'Amount': transaction['Amount'],
+            'Date': transaction['Date'] ? transaction['Date'] : '',
+            'Account Name': transaction['Account Name'] ? transaction['Account Name'] : '',
+            'Description': transaction['Description'] ? transaction['Description'] : '',
+            'Amount': transaction['Amount'] ? transaction['Amount'] : '',
             'Transaction Type': transaction['Transaction Type'],
-            'Category': transaction['Category'],
+            'Category': transaction['Category'] ? transaction['Category'] : '',
         }
     })
     return filtered;
