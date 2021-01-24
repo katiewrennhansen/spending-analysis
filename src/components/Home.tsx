@@ -21,7 +21,7 @@ export const Home: React.FC<Props> = ({ onFileLoad, transactions, dates, summary
                     onFileLoaded={(data, fileInfo) => onFileLoad(data, fileInfo)}
                 />
 
-                <p>{ file ? `Currently reading: ${file}` : 'No file selected' }</p>
+                <p>{ file ? <span>Currently reading: <strong>{file}</strong></span> : 'No file selected' }</p>
             </div>
 
             { transactions?.length 
@@ -30,19 +30,19 @@ export const Home: React.FC<Props> = ({ onFileLoad, transactions, dates, summary
                     <div className="spending-summary">
                         <div className="card">
                             <h3>Total Income +</h3>
-                            <p className="green">${summary.totalIncome}</p>
+                            <p className="green-success">${summary.totalIncome}</p>
                         </div>
                         <div className="card">
                             <h3>Total Spent -</h3>
-                            <p className="red">${summary.totalSpent}</p>
+                            <p className="red-warning">${summary.totalSpent}</p>
                         </div>
                         <div className="card">
                             <h3>Total Saved</h3>
-                            <p className="green">${summary.totalSaved}</p>
+                            <p className="green-success">${summary.totalSaved}</p>
                         </div>
                         <div className="card">
                             <h3>Percent Saved</h3>
-                            <p className={(summary.percentSaved > 40) ? 'green' : 'red'}>{summary.percentSaved}%</p>
+                            <p className={(summary.percentSaved > 50) ? 'green-success' : 'red-warning'}>{summary.percentSaved}%</p>
                         </div>
                     </div>
                 </div>

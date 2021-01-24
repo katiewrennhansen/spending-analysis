@@ -7,5 +7,7 @@
   --main-bg-color: hsl(0, 0%, 17%);
   --light-bg-color: rgb(238, 238, 238);
   --main-accent-color: #00d9ad;
-  --light-accent-color: #96ffea;
+  --light-accent-color: #62e6cb;
+  --red-warning: rgb(247, 58, 99);
+  --green-success: rgb(73, 201, 68);
 }

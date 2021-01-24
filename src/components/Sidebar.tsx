@@ -1,8 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faChartBar, faList, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
-
+import { 
+    faHome, 
+    faChartBar, 
+    faList, 
+    faCalendarAlt 
+} from '@fortawesome/free-solid-svg-icons';
+    
 export const Sidebar: React.FC = () => {
     return (
         <aside className="sidebar">

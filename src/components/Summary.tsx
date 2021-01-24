@@ -14,7 +14,7 @@ export const Summary: React.FC<Props> = ({ breakdown, summary }) => {
                     .map((item, i) => (
                         <div className="card" key={i}>
                             <h3>{item}</h3>
-                            <p>${Math.abs(breakdown[item]).toFixed(2)}</p>
+                            <p className="red-warning">${Math.abs(breakdown[item]).toFixed(2)}</p>
                             <p>{(((Math.abs(breakdown[item])) / summary.totalIncome) * 100).toFixed(2)}% of total income</p>
                         </div>
                 ))}

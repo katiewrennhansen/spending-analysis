@@ -10,6 +10,7 @@ export const TransactionsList: React.FC<Props> = ({ transactions, dates }) => {
     return (
         <div className="transactions-list">
             <h2>Transaction List{dates?.length ? `: ${dates[0]} - ${dates[dates.length - 1]}` : ''}</h2>
+            <p>Showing {transactions?.length ? transactions.length : '0'} transaction{transactions.length !== 1 ? 's' : ''}</p>
             { transactions?.length
                 ? <table className="transactions-table">
                     <thead>

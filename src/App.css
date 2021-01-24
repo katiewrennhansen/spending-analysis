@@ -23,7 +23,7 @@ table {
   border-collapse: separate;
   border-spacing: 0;
   border-radius: 5px;
-  border: 1px solid var(--main-bg-color);
+  border: 2px solid var(--main-bg-color);
 }
 
 td p {
@@ -61,6 +61,16 @@ svg.monthly-breakdown {
   padding: 10px;
 }
 
+.red-warning {
+  color: var(--red-warning);
+  font-weight: 600;
+}
+
+.green-success {
+  color: var(--green-success);
+  font-weight: 600;
+}
+
 /* HEADER */
 .header {
   padding: 10px 30px 40px;
@@ -78,6 +88,10 @@ svg.monthly-breakdown {
   width: 100%;
   overflow: hidden;
   line-height: 0;
+}
+
+.custom-shape-divider svg {
+  opacity: 0.6;
 }
 
 
@@ -99,7 +113,9 @@ svg.monthly-breakdown {
 
 .csv-input {
   color: #fff;
-  width: 110px;
+  width: 113px;
+  border-radius: 4px;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.15);
 }
 
 .csv-input::-webkit-file-upload-button {
@@ -117,7 +133,6 @@ svg.monthly-breakdown {
   cursor: pointer;
   font-weight: 800;
   font-size: 16px;
-  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.15);
 }
 
 .csv-input::avtive {
@@ -129,17 +144,6 @@ svg.monthly-breakdown {
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 25px;
   max-width: 1000px;
-}
-
-
-.spending-summary .card .red {
-  color: rgb(192, 4, 4);
-  font-weight: 600;
-}
-
-.spending-summary .card .green {
-  color: rgb(5, 146, 0);
-  font-weight: 600;
 }
 
 /* DASHBOARD */

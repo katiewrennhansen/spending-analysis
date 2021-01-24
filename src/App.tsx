@@ -5,10 +5,8 @@ import { Header } from './components/Header';
 import { Home } from './components/Home';
 import { TransactionsList } from './components/TransactionsList';
 import { Monthly } from './components/Monthly';
-
 import { 
   buildBreakdown, 
-  excludeCategories, 
   cleanData,
   buildDateRange,
   buildSummary
@@ -30,27 +28,32 @@ export const App: React.FC<{}> = () => {
   const [dates, setDates] = useState(emptyDates)
   const [file, setFile] = useState('')
 
+  let toExclude: string[] = ['Transfer', 'Credit Card Payment']
+
+  //build data on file load
   const onFileLoad = (data: Transaction[], fileInfo: any): void => {
     if(data){
       setFile(fileInfo.name)
-      setTransactions(cleanData(data))
-      createSummary(data)
+
+      //remove extraneous fields from transations object
+      const cleanedData = cleanData(data, toExclude)
+      setTransactions(cleanedData)
+
+      //build spending summary from transaction data
+      createSummary(cleanedData)
     }
   }
 
-  const createSummary = (transactions: Transaction[]): void => {
-      // //remove all values with category of transfer from array
-      let toExclude: string[] = ['Transfer', 'Credit Card Payment']
-      let noTransfers = excludeCategories(transactions, toExclude)
-
+  //create spending summary (breadown, date range, summary)
+  const createSummary = (transactions: Transaction[]): void => { 
       //set category breakdown
-      let newBreakdown = buildBreakdown(noTransfers)
+      let newBreakdown = buildBreakdown(transactions)
       setBreakdown(newBreakdown)
 
       let dateRange = buildDateRange(transactions)
       setDates(dateRange);
 
-      let newSummary = buildSummary(noTransfers);
+      let newSummary = buildSummary(transactions);
       setSummary(newSummary)
   }
 
