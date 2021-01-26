@@ -1,0 +1,28 @@
+Date,Description,Amount,Transaction Type,Category
+12/22/20,Intenet Bill,50,debit,Utilities
+12/19/20,Sending Package,20,debit,Shipping
+12/15/20,Paycheck,2000,credit,Paycheck
+12/15/20,Paycheck,1245.1,credit,Paycheck
+12/10/20,Grocery Store,300,debit,Groceries
+12/1/20,Restaurant,20,debit,Restaurants
+12/1/20,Rent,1200,debit,Rent
+11/22/20,Intenet Bill,50,debit,Utilities
+11/15/20,Paycheck,2000,credit,Paycheck
+11/15/20,Paycheck,1245.1,credit,Paycheck
+11/8/20,Transfer Money,300,debit,Transfer
+11/1/20,Rent,1200,debit,Rent
+10/31/20,Grocery Store,120,credit,Groceries
+10/30/20,Gas Station,32.45,debit,Gas
+10/30/20,Netflix,15,debit,Utilities
+10/22/20,Intenet Bill,50,debit,Utilities
+10/15/20,Paycheck,2000,credit,Paycheck
+10/15/20,Paycheck,1245.1,credit,Paycheck
+10/10/20,Grocery Store,190,debit,Groceries
+10/1/20,Rent,1200,debit,Rent
+9/23/20,Grocery Store,160,debit,Groceries
+9/22/20,Intenet Bill,50,debit,Utilities
+9/18/20,Gas Station,20.14,debit,Gas
+9/15/20,Paycheck,2000,credit,Paycheck
+9/15/20,Paycheck,1245.1,credit,Paycheck
+9/10/20,Groceries,80,debit,Groceries
+9/1/20,Rent,1200,debit,Rent

@@ -30,7 +30,7 @@ export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => 
         <div className="monthly-chart">
             <h2>Monthly Data{dates?.length ? `: ${dates[0]} - ${dates[dates.length - 2]}` : ''}</h2>
 
-            { transactions?.length
+            {transactions?.length
                 ? <div> 
                     <div className="monthly-select">
                         <div className="select-container">
@@ -41,7 +41,7 @@ export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => 
                             }} 
                             value={activeCat}
                             className="monthly-dropdown">
-                                { categories.map(cat => (
+                                {categories.map(cat => (
                                     <option key={cat} value={cat}>{cat}</option>
                                 ))}
                             </select>
@@ -51,7 +51,7 @@ export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => 
                     </div>
                     <svg className='monthly-breakdown' width={900} height={500}></svg>
                 </div>
-                : <p>There is no data available. Please upload a CSV to view monthly spending summary.</p>
+                : <p className="error-message">There is no data available. Please upload a CSV to view monthly spending summary.</p>
             }
         </div>
     )

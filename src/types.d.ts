@@ -1,6 +1,5 @@
 //Define structure of transaction object
 interface Transaction {
-    'Account Name': string;
     'Amount': string;
     'Category': string;
     'Date': string;

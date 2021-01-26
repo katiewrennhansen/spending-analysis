@@ -22,10 +22,6 @@ export const BreakdownBarChart: React.FC<Props> = ({ breakdown }) => {
    
     return (
         <div className='bar-chart'>
-            { breakdown
-                ? null
-                : <div>Sorry, no data currently available.</div>
-            }
             <svg className='spending-breakdown' width={900} height={500}></svg>
         </div>
     );

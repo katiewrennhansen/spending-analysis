@@ -12,6 +12,8 @@ import * as _d3 from 'd3';
     6. cleanBreakdownData - clean up breakdown data to conform to bar chart
     7. breakdownMonth - build monthly data for selected category over time
     8. buildGraph - build d3 visualization
+    9. formatNumber - format numbers with commas in the thousands place, and round to 2 decimal pts
+
 */
 
 
@@ -87,7 +89,6 @@ export const cleanData = (transactions: Transaction[], exclude: string[]): Trans
             //transaction type must be either debit/credit
             filtered.push({
                 'Date': transaction['Date'] ? transaction['Date'] : '',
-                'Account Name': transaction['Account Name'] ? transaction['Account Name'] : '',
                 'Description': transaction['Description'] ? transaction['Description'] : '',
                 'Amount': transaction['Amount'] ? transaction['Amount'] : '',
                 'Transaction Type': transaction['Transaction Type'],
@@ -236,11 +237,31 @@ export const buildGraph = (breakdown: any[], el:string, addText: boolean): void 
         
         //if text parameter has been set, add text labels to chart
         if(addText){
+            let barWidth = xScale.bandwidth();
+
             bar.append('text')
                 .attr('x', (s) => s.scale)
                 .attr('y', (s) => yScale(s.y) - 5)
-                .text((d) => `$${(d.y).toFixed(2)}`)
+                .attr("dx", barWidth/2)
+                .text((d) => `$${formatNumber((d.y).toFixed(2))}`)
                 .attr('font-size', '10px')
+                .attr("text-anchor", "middle")
         }
     }
+}
+
+//format numbers with commas in the thousands place, and round to 2 decimal pts
+export const formatNumber = (num: any): string => {
+    let formatted;
+    //parse original number
+    let float = parseFloat(num);
+
+    if(float) {
+        //round to 2 decimal pts
+        let newFloat = float.toFixed(2)
+        //replace commas
+        formatted = newFloat.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    } 
+
+    return formatted ? formatted : '0';
 }

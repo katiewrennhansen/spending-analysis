@@ -15,13 +15,13 @@ export const TransactionsList: React.FC<Props> = ({ transactions, dates }) => {
                 ? <table className="transactions-table">
                     <thead>
                         <tr>
-                            { (transactions?.length > 0) && Object.keys(transactions[0]).map((item, i) => (
+                            {(transactions?.length > 0) && Object.keys(transactions[0]).map((item, i) => (
                                 <th key={i}>{item}</th>
                             ))}
                         </tr>
                     </thead>
                     <tbody>
-                        { transactions.map((transaction, i) => (
+                        {transactions.map((transaction, i) => (
                             <Transaction 
                                 key={i} 
                                 transaction={transaction} 
@@ -29,7 +29,7 @@ export const TransactionsList: React.FC<Props> = ({ transactions, dates }) => {
                         ))}
                     </tbody>
                 </table>
-                : <p>There is no data available. Please upload a CSV to view your transactions list.</p>
+                : <p className="error-message">There is no data available. Please upload a CSV to view your transactions list.</p>
             }
         </div>
     )

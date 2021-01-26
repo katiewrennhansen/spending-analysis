@@ -71,6 +71,18 @@ svg.monthly-breakdown {
   font-weight: 600;
 }
 
+.error-message {
+  background-color: rgba(247, 58, 99, 0.15);
+  border-radius: 4px;
+  padding: 10px 12px
+}
+
+.success-message {
+  background-color: rgba(73, 201, 68, 0.15);
+  border-radius: 4px;
+  padding: 10px 12px;
+}
+
 /* HEADER */
 .header {
   padding: 10px 30px 40px;
@@ -109,6 +121,7 @@ svg.monthly-breakdown {
 .csv-upload {
   display: grid;
   grid-template-columns: 160px 1fr;
+  align-items: center;
 }
 
 .csv-input {

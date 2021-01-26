@@ -27,8 +27,9 @@ export const App: React.FC<{}> = () => {
   const [summary, setSummary] = useState({})
   const [dates, setDates] = useState(emptyDates)
   const [file, setFile] = useState('')
+  const [error, setError] = useState(false)
 
-  let toExclude: string[] = ['Transfer', 'Credit Card Payment']
+  let toExclude: string[] = ['Transfer', 'Credit Card Payment'];
 
   //build data on file load
   const onFileLoad = (data: Transaction[], fileInfo: any): void => {
@@ -41,6 +42,9 @@ export const App: React.FC<{}> = () => {
 
       //build spending summary from transaction data
       createSummary(cleanedData)
+    } else {
+      //set error status to true
+      setError(true)
     }
   }
 
@@ -87,13 +91,14 @@ export const App: React.FC<{}> = () => {
                     dates={dates}
                   />
                 </Route>
-                <Route exact path="/">
+                <Route path="/">
                   <Home 
                     onFileLoad={onFileLoad} 
                     transactions={transactions} 
                     dates={dates}
                     summary={summary}
                     file={file}
+                    error={error}
                   />
                 </Route>
               </Switch>
