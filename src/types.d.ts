@@ -17,6 +17,13 @@ interface Breakdown {
     [key: string]: number;
 }
 
+//Graph item obejct
+interface GraphItem  {
+    x: string | number;
+    y: number;
+    scale: number;
+}
+
 //Handle object.keys mapping
 type ObjectKeys<T> = 
     T extends object ? (keyof T)[] :

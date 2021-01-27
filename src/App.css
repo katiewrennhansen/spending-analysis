@@ -152,6 +152,36 @@ svg.monthly-breakdown {
   outline: none;
 }
 
+.category-container {
+  padding: 40px 0 20px;
+}
+
+.category-exclusion {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  align-items: center;
+}
+
+.category-option {
+  border: 2px solid var(--main-bg-color);
+  border-radius: 4px;
+  padding: 6px 8px;
+}
+
+.category-option:hover {
+  cursor: pointer;
+}
+
+.category-option.selected {
+  background-color: var(--main-accent-color);
+  color: #fff;
+}
+
+.category-label {
+  padding-left: 6px;
+}
+
 .home .spending-summary {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

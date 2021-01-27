@@ -14,7 +14,7 @@ export const BreakdownBarChart: React.FC<Props> = ({ breakdown }) => {
             return;
         } else {
             //build breakdown object to match x/y format
-            let cleanedBreakdown = cleanBreakdownData(breakdown)
+            let cleanedBreakdown: GraphItem[] = cleanBreakdownData(breakdown)
             //build data visualization
             buildGraph(cleanedBreakdown, 'spending-breakdown', false)
         }

@@ -79,7 +79,16 @@ export const buildSummary = (noTransfers: Transaction[]): Summary => {
 }
 
 //exclude select fields and categories from transactions array
-export const cleanData = (transactions: Transaction[], exclude: string[]): Transaction[] => {
+export const cleanData = (transactions: Transaction[], categories: Summary[]): Transaction[] => {
+    let exclude: string[] = ['Transfer', 'Credit Card Payment'];
+    // let exclude: string[] = [];
+
+    // categories.forEach(cat => {
+    //     if(cat.active){
+    //         exclude.push(cat.name) 
+    //     }
+    // })
+
     let filtered: Transaction[] = [];
     
     transactions.forEach(transaction => {
@@ -129,22 +138,23 @@ export const buildDateRange = (data: Transaction[]): any[] => {
 }
 
 //clean up breakdown data to conform to bar chart
-export const cleanBreakdownData = (data: Breakdown): any[] => {
-    let cleanedBreakdown:any[] = [];
+export const cleanBreakdownData = (data: Breakdown): GraphItem[] => {
+    let cleanedBreakdown:GraphItem[] = [];
     Object.keys(data).forEach(key => {
         cleanedBreakdown.push({
             x: key,
-            y: Math.abs(data[key])
+            y: Math.abs(data[key]),
+            scale: 0
         })
     })
     return cleanedBreakdown;
 }
 
 //build monthly adata for selected category over time
-export const breakdownMonth = (transactions: Transaction[], category: any): any[] => {
+export const breakdownMonth = (transactions: Transaction[], category: any): GraphItem[] => {
     //create new object 
     let summary: Summary = {};
-    let graphData: any[] = [];
+    let graphData: GraphItem[] = [];
     //loop through transactions
     transactions.forEach(t => {
         if(t['Category'] === category){
@@ -165,7 +175,8 @@ export const breakdownMonth = (transactions: Transaction[], category: any): any[
     Object.keys(summary).forEach(key => {
         graphData.push({ 
             x: key,
-            y: Number(summary[key].toFixed(2))
+            y: Number(summary[key].toFixed(2)),
+            scale: 0
         })
     })
 
@@ -184,6 +195,7 @@ export const buildGraph = (breakdown: any[], el:string, addText: boolean): void 
     const svg = _d3.select(`svg.${el}`);
 
     if(svg){
+        //clear svg between re-renders
         svg.selectAll('*').remove();
 
         const chart = svg.append('g')
@@ -237,15 +249,33 @@ export const buildGraph = (breakdown: any[], el:string, addText: boolean): void 
         
         //if text parameter has been set, add text labels to chart
         if(addText){
+            //define width of current bar
             let barWidth = xScale.bandwidth();
 
+            //build line chart
+            let line = _d3.line<GraphItem>()
+                            .x((d: GraphItem) => d.scale + margin + barWidth/2)
+                            .y((d: GraphItem) => yScale(d.y) + margin)
+                            .curve(_d3.curveMonotoneX)
+
+            //append line chart
+            svg.append("path")
+                .datum(breakdown)
+                .attr("fill", "none")
+                .attr("stroke", "hsl(0, 0%, 17%)")
+                .attr("stroke-width", 1.5)
+                .attr("d", line)
+
+            //append text elements
             bar.append('text')
                 .attr('x', (s) => s.scale)
-                .attr('y', (s) => yScale(s.y) - 5)
+                .attr('y', (s) => yScale(s.y) - 10)
                 .attr("dx", barWidth/2)
-                .text((d) => `$${formatNumber((d.y).toFixed(2))}`)
-                .attr('font-size', '10px')
-                .attr("text-anchor", "middle")
+                .text((s) => `$${formatNumber((s.y).toFixed(2))}`)
+                .attr('font-size', '11px')
+                .attr('text-anchor', 'middle')
+                .attr('fill', 'hsl(0, 0%, 17%)')
+                .attr('font-weight', '800')        
         }
     }
 }

@@ -19,17 +19,17 @@ import {
 import './App.css';
 
 const initialTransactions: Transaction[] = [];
-const emptyDates: string[] = [];
+const emptyArray: any[] = [];
+
 
 export const App: React.FC<{}> = () => {
   const [transactions, setTransactions] = useState(initialTransactions)
   const [breakdown, setBreakdown] = useState({})
   const [summary, setSummary] = useState({})
-  const [dates, setDates] = useState(emptyDates)
+  const [dates, setDates] = useState(emptyArray)
   const [file, setFile] = useState('')
   const [error, setError] = useState(false)
-
-  let toExclude: string[] = ['Transfer', 'Credit Card Payment'];
+  const [categories, setCategories] = useState(emptyArray)
 
   //build data on file load
   const onFileLoad = (data: Transaction[], fileInfo: any): void => {
@@ -37,15 +37,58 @@ export const App: React.FC<{}> = () => {
       setFile(fileInfo.name)
 
       //remove extraneous fields from transations object
-      const cleanedData = cleanData(data, toExclude)
+      const cleanedData = cleanData(data, categories)
       setTransactions(cleanedData)
 
       //build spending summary from transaction data
       createSummary(cleanedData)
+
+      let categoryArray: string[] = [];
+      let categoryObj: Summary[] = []
+
+      cleanedData.forEach(transaction => {
+        if(!categoryArray.includes(transaction['Category'])) {
+          var key = transaction['Category'];
+          categoryArray.push(key)
+          categoryObj.push({ 
+              name: key,
+              active: false 
+          })
+        }
+      })
+
+      setCategories(categoryObj)
+
     } else {
       //set error status to true
       setError(true)
     }
+  }
+
+  const toggleCategory = (category: Summary): void => {
+    let toggledCategories: Summary[] = []
+  
+    categories.forEach(cat => {
+      if(cat.name === category.name){
+        toggledCategories.push({
+          name: cat.name,
+          active: (cat.active === true) ? false : true
+        })
+      } else {
+        toggledCategories.push({
+          name: cat.name,
+          active: cat.active
+        })
+      }
+    })
+
+    setCategories(toggledCategories)
+
+    const cleanedData = cleanData(transactions, toggledCategories)
+    setTransactions(cleanedData)
+
+    //build spending summary from transaction data
+    createSummary(cleanedData)
   }
 
   //create spending summary (breadown, date range, summary)
@@ -99,6 +142,8 @@ export const App: React.FC<{}> = () => {
                     summary={summary}
                     file={file}
                     error={error}
+                    categories={categories}
+                    toggleCategory={toggleCategory}
                   />
                 </Route>
               </Switch>
