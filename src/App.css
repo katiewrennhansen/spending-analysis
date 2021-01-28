@@ -15,7 +15,8 @@ h1,
 h2, 
 h3, 
 .sidebar a, 
-.csv-input {
+.csv-input,
+.category-option {
   font-family: 'Yusei Magic', sans-serif;
 }
 
@@ -152,21 +153,35 @@ svg.monthly-breakdown {
   outline: none;
 }
 
+
+
+/* CATEGORY */
 .category-container {
   padding: 40px 0 20px;
 }
 
+.category-container h2:hover {
+  cursor: pointer;
+}
+
+.category-container h2 .icon {
+  font-size: 26px;
+  padding: 5px 0 0 10px;
+}
+
 .category-exclusion {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 15px;
   align-items: center;
+  max-width: 900px;
 }
 
 .category-option {
-  border: 2px solid var(--main-bg-color);
   border-radius: 4px;
-  padding: 6px 8px;
+  padding: 8px 10px;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.15);
+  font-size: 14px;
 }
 
 .category-option:hover {

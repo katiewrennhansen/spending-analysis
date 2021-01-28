@@ -16,7 +16,6 @@ import * as _d3 from 'd3';
 
 */
 
-
 //build category breakdown
 export const buildBreakdown = (transactions: Transaction[]): Breakdown => {
     let categories: string[] = [];
@@ -24,7 +23,7 @@ export const buildBreakdown = (transactions: Transaction[]): Breakdown => {
 
     //build array of categories
     transactions
-        .map(transaction => (!categories.includes(transaction['Category'])) ? categories.push(transaction['Category']) : null)
+        .map(transaction => (!categories.includes(transaction['Category'])) && categories.push(transaction['Category']))
 
     //break out spending into cateogries
     categories.forEach(category => {
@@ -32,13 +31,16 @@ export const buildBreakdown = (transactions: Transaction[]): Breakdown => {
         transactions
             .filter(transaction => transaction['Category'] === category)
             .forEach(transaction => {
-                if(transaction['Transaction Type'] === 'credit') breakdown[category] += Number(transaction['Amount']);
-                else breakdown[category] -= Number(transaction['Amount']);
+                (transaction['Transaction Type'] === 'credit') 
+                    ? breakdown[category] += Number(transaction['Amount'])
+                    : breakdown[category] -= Number(transaction['Amount'])
             })
         
+        //if total value is negative ($$ spend), assign value else ($$ gained), remove category
         let totalValue = Number(breakdown[category].toFixed(2));
-        if(totalValue < 0) breakdown[category] = totalValue;
-        else delete breakdown[category];
+        (totalValue < 0) 
+            ? breakdown[category] = totalValue 
+            : delete breakdown[category];
     })
 
     return breakdown;
@@ -46,15 +48,14 @@ export const buildBreakdown = (transactions: Transaction[]): Breakdown => {
 
 //caculate total credit/debit on account per month
 export const calculateTotals = (transactions: Transaction[], type: 'credit' | 'debit'): number  => {
-    let totalSpent: number = 0;
-    transactions.forEach(transaction => {
-        //filter for all transaction of set type
-        if(transaction['Transaction Type'] === type){
-            //add to totalSpent
-            totalSpent += Number(transaction['Amount']);
-        }
-    })
-    return Number(totalSpent.toFixed(2));
+    let total: number = 0;
+    
+    //filter for all transaction of set type, add to total 
+    transactions.forEach(transaction => (
+        (transaction['Transaction Type'] === type) && (total += Number(transaction['Amount'])))
+    )
+
+    return Number(total.toFixed(2));
 }
 
 //build summary object
@@ -80,17 +81,12 @@ export const buildSummary = (noTransfers: Transaction[]): Summary => {
 
 //exclude select fields and categories from transactions array
 export const cleanData = (transactions: Transaction[], categories: Summary[]): Transaction[] => {
-    let exclude: string[] = ['Transfer', 'Credit Card Payment'];
-    // let exclude: string[] = [];
+    //build array of categories to exclude
+    let exclude: string[] = [];
+    categories.forEach(cat => cat.active && exclude.push(cat.name))
 
-    // categories.forEach(cat => {
-    //     if(cat.active){
-    //         exclude.push(cat.name) 
-    //     }
-    // })
-
+    //build cleaned array of transactions
     let filtered: Transaction[] = [];
-    
     transactions.forEach(transaction => {
         //if transaction has data, and does not contain exclude category, add to filtered
         if(Object.keys(transaction).length > 1 && !exclude.includes(transaction['Category'])){
@@ -110,7 +106,7 @@ export const cleanData = (transactions: Transaction[], categories: Summary[]): T
 }
 
 //build array containing sorted transactions dates
-export const buildDateRange = (data: Transaction[]): any[] => {
+export const buildDateRange = (data: Transaction[]): string[] => {
     //create array containing all transaction dates
     let dates: any[] = [];
     data.map(d => dates.push(new Date(d['Date'])))
@@ -124,11 +120,15 @@ export const buildDateRange = (data: Transaction[]): any[] => {
 
       //handle month
       let month = (1 + date.getMonth()).toString();
-      month = month.length > 1 ? month : '0' + month;
+      month = (month.length > 1) 
+                ? month 
+                : '0' + month;
 
       //handle day
       let day = date.getDate().toString();
-      day = day.length > 1 ? day : '0' + day;
+      day = (day.length > 1) 
+                ? day 
+                : '0' + day;
       
       //push formatted date into new array
       cleanedDates.push(`${month}/${day}/${year}`);
@@ -150,7 +150,7 @@ export const cleanBreakdownData = (data: Breakdown): GraphItem[] => {
     return cleanedBreakdown;
 }
 
-//build monthly adata for selected category over time
+//build monthly data for selected category over time
 export const breakdownMonth = (transactions: Transaction[], category: any): GraphItem[] => {
     //create new object 
     let summary: Summary = {};
@@ -161,13 +161,12 @@ export const breakdownMonth = (transactions: Transaction[], category: any): Grap
             //split dates into MM/YYYY 
             let splitDate = t['Date'].split('/')
             let condensedDate = `${splitDate[0]}/${splitDate[2]}`;
-            //if no current value, create new value
-            if(!Object.keys(summary).includes(condensedDate)){
-                summary[condensedDate] = Number(t['Amount'])
-            } else {
-                //if value, add to values
-                summary[condensedDate] = Number(summary[condensedDate]) + Number(t['Amount']);
-            }
+            let amount = Number(t['Amount']);
+
+            //if no current value, create new value, if value, add to values
+            (!Object.keys(summary).includes(condensedDate))
+                ? summary[condensedDate] = amount
+                : summary[condensedDate] = Number(summary[condensedDate]) + amount
         }
     }) 
 
@@ -194,7 +193,7 @@ export const buildGraph = (breakdown: any[], el:string, addText: boolean): void 
     const height = 500 - 2 * margin;
     const svg = _d3.select(`svg.${el}`);
 
-    if(svg){
+    if(svg && breakdown){
         //clear svg between re-renders
         svg.selectAll('*').remove();
 
@@ -282,16 +281,17 @@ export const buildGraph = (breakdown: any[], el:string, addText: boolean): void 
 
 //format numbers with commas in the thousands place, and round to 2 decimal pts
 export const formatNumber = (num: any): string => {
-    let formatted;
-    //parse original number
-    let float = parseFloat(num);
+    let formatted: string = '0';
 
-    if(float) {
+    if(num) {
         //round to 2 decimal pts
-        let newFloat = float.toFixed(2)
+        let newFloat = parseFloat(num)
+                            .toFixed(2)
         //replace commas
-        formatted = newFloat.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        formatted = newFloat
+                        .toString()
+                        .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     } 
 
-    return formatted ? formatted : '0';
+    return formatted;
 }

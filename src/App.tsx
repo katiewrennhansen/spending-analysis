@@ -21,8 +21,8 @@ import './App.css';
 const initialTransactions: Transaction[] = [];
 const emptyArray: any[] = [];
 
-
 export const App: React.FC<{}> = () => {
+  const [initial, setInitial] = useState(initialTransactions)
   const [transactions, setTransactions] = useState(initialTransactions)
   const [breakdown, setBreakdown] = useState({})
   const [summary, setSummary] = useState({})
@@ -39,6 +39,9 @@ export const App: React.FC<{}> = () => {
       //remove extraneous fields from transations object
       const cleanedData = cleanData(data, categories)
       setTransactions(cleanedData)
+      
+      //set initial category array - duplicated to preserve original list
+      setInitial(cleanedData)
 
       //build spending summary from transaction data
       createSummary(cleanedData)
@@ -71,20 +74,17 @@ export const App: React.FC<{}> = () => {
     categories.forEach(cat => {
       if(cat.name === category.name){
         toggledCategories.push({
-          name: cat.name,
-          active: (cat.active === true) ? false : true
+          ...cat,
+          active: (cat.active) ? false : true
         })
       } else {
-        toggledCategories.push({
-          name: cat.name,
-          active: cat.active
-        })
+        toggledCategories.push(cat)
       }
     })
 
     setCategories(toggledCategories)
 
-    const cleanedData = cleanData(transactions, toggledCategories)
+    const cleanedData = cleanData(initial, toggledCategories)
     setTransactions(cleanedData)
 
     //build spending summary from transaction data

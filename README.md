@@ -24,8 +24,6 @@ Example Table:
 
 Any additional fields may be added within the CSV however they will not be included in the calulations. 
 
-This application will automatically exclude any items that have a category of 'Transfer' or 'Credit Card Payment'. This is for my own internal use for this application, as I wish to exclude these particular transactions from my total calculations. In furture iterations, I intend to build out customizable category excustion functionality. For now, all items with the above mentioned categories will be excluded. 
-
 A file containing dummy data is contained within this repository for testing purposed. That file is located in the root directory and is titled test-data.csv.
 
 ## Run Locally
