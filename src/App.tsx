@@ -114,21 +114,21 @@ export const App: React.FC<{}> = () => {
 
           <main className="dashboard-container">
             <Switch>
-                <Route path='/breakdown'>
+                <Route path='/spending-analysis/breakdown'>
                   <Dashboard 
                     breakdown={breakdown} 
                     dates={dates}
                     summary={summary}
                   />
                 </Route>
-                <Route path='/monthly'>
+                <Route path='/spending-analysis/monthly'>
                   <Monthly 
                     transactions={transactions} 
                     dates={dates}
                     breakdown={breakdown} 
                   />
                 </Route>
-                <Route path='/transactions'>
+                <Route path='/spending-analysis/transactions'>
                   <TransactionsList 
                     transactions={transactions} 
                     dates={dates}

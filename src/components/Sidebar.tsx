@@ -13,22 +13,22 @@ export const Sidebar: React.FC = () => {
         <aside className="sidebar">
             <ul>
                 <li className="sidebar-item">
-                    <NavLink exact to='/'>
+                    <NavLink exact to='/spending-analysis/'>
                         <FontAwesomeIcon icon={faHome} /> Home
                     </NavLink>
                 </li>
                 <li className="sidebar-item">
-                    <NavLink to='/breakdown'>
+                    <NavLink to='/spending-analysis/breakdown'>
                         <FontAwesomeIcon icon={faChartBar} /> Spending Breakdown
                     </NavLink>
                 </li>
                 <li className="sidebar-item">
-                    <NavLink to='/monthly'>
+                    <NavLink to='/spending-analysis/monthly'>
                         <FontAwesomeIcon icon={faCalendarAlt} /> Monthly Data
                     </NavLink>
                 </li>
                 <li className="sidebar-item">
-                    <NavLink to='/transactions'>
+                    <NavLink to='/spending-analysis/transactions'>
                         <FontAwesomeIcon icon={faList} /> Transaction List
                     </NavLink>
                 </li>

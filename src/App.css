@@ -16,7 +16,9 @@ h2,
 h3, 
 .sidebar a, 
 .csv-input,
-.category-option {
+.category-option,
+.prev-btn,
+.next-btn  {
   font-family: 'Yusei Magic', sans-serif;
 }
 
@@ -45,6 +47,10 @@ th {
   text-align: left;
   padding: 8px 4px;
   font-size: 14px;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 svg.spending-breakdown,
@@ -321,6 +327,34 @@ select:focus + .focus {
 .transactions-list {
   list-style: none;
   padding: 0;
+}
+
+.transaction-toolbar {
+  display: flex;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  width: 260px;
+  justify-content: space-between;
+  margin: auto 0 auto auto;
+}
+
+.prev-btn,
+.next-btn {
+  border: none;
+  background: var(--main-accent-color);
+  color: #fff;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.prev-btn .icon {
+  margin-right: 5px;
+}
+.next-btn .icon {
+  margin-left: 5px;
 }
 
 .transactions-list .transaction {
