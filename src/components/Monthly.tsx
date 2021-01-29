@@ -33,7 +33,7 @@ export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => 
             {transactions?.length
                 ? <div> 
                     <div className="monthly-select">
-                        <div className="select-container">
+                        <div className="select-container pointer">
                             <select onChange={e => {
                                 const target = e.target as HTMLSelectElement;
                                 const cat: any = target.value;
@@ -49,7 +49,7 @@ export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => 
                         </div>
                         <h3>{activeCat}</h3>
                     </div>
-                    <svg className='monthly-breakdown' width={900} height={500}></svg>
+                    <svg className='monthly-breakdown' preserveAspectRatio="xMinYMin meet" viewBox="0 0 1040 660"></svg>
                 </div>
                 : <p className="error-message">There is no data available. Please upload a CSV to view monthly spending summary.</p>
             }

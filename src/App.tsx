@@ -16,7 +16,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import './App.css';
+import './styles/App.css';
 
 const initialTransactions: Transaction[] = [];
 const emptyArray: any[] = [];

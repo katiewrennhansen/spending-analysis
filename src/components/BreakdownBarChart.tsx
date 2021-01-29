@@ -22,7 +22,7 @@ export const BreakdownBarChart: React.FC<Props> = ({ breakdown }) => {
    
     return (
         <div className='bar-chart'>
-            <svg className='spending-breakdown' width={900} height={500}></svg>
+            <svg className='spending-breakdown' preserveAspectRatio="xMinYMin meet" viewBox="0 0 1040 680"></svg>
         </div>
     );
   }

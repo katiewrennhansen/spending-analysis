@@ -18,7 +18,10 @@ export const Categories: React.FC<Props> = ({ categories, toggleCategory }) => {
 
     return (
         <div className="category-container">
-            <h2 onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}>
+            <h2 
+                className="pointer"
+                onClick={() => showDropdown ? setShowDropdown(false) : setShowDropdown(true)}
+            >
                 <span>Exclude Categories ({activeCat.length})</span>
                 { showDropdown 
                     ? <FontAwesomeIcon className="icon" icon={faMinus} /> 
@@ -32,7 +35,7 @@ export const Categories: React.FC<Props> = ({ categories, toggleCategory }) => {
                         {categories.map((cat, i) =>  (
                             <div 
                                 key={i} 
-                                className={`category-option ${cat?.active ? 'selected' : ''}`}
+                                className={`category-option  pointer ${cat?.active ? 'selected' : ''}`}
                                 onClick={() => toggleCategory(cat)}
                             >
                                 <FontAwesomeIcon icon={faTimes} />

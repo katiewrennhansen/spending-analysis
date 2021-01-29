@@ -1,7 +1,12 @@
 import React from 'react';
 import CSVReader from 'react-csv-reader';
-import { Overview } from './Overview'
-import { Categories } from './Categories'
+import { Overview } from './Overview';
+import { Categories } from './Categories';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+    faCheckCircle
+} from '@fortawesome/free-solid-svg-icons';
+
 
 interface Props {
     onFileLoad: (transactions: Transaction[], fileInfo: any) => void;
@@ -39,7 +44,12 @@ export const Home: React.FC<Props> = ({
 
                 <p>
                     {file 
-                        ? <span className="success-message">Currently reading: <strong>{file}</strong></span> 
+                        ? <span className="success-message">  
+                            <FontAwesomeIcon 
+                                icon={faCheckCircle} 
+                                className="icon"
+                            />
+                            Currently reading: <strong>{file}</strong></span> 
                         : <span>No file selected</span>
                     }
                 </p>

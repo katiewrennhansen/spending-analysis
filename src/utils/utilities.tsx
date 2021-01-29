@@ -188,10 +188,10 @@ export const breakdownMonth = (transactions: Transaction[], category: any): Grap
 
 //build d3 data visualization around input breakdown data
 export const buildGraph = (breakdown: any[], el:string, addText: boolean): void => {
-    const margin = 100;
-    const width = 900 - 2 * margin;
-    const height = 500 - 2 * margin;
-    const svg = _d3.select(`svg.${el}`);
+    const margin = 80;
+    const width = 900;
+    const height = 500;
+    const svg = _d3.select(`svg.${el}`)
 
     if(svg && breakdown){
         //clear svg between re-renders
@@ -271,7 +271,7 @@ export const buildGraph = (breakdown: any[], el:string, addText: boolean): void 
                 .attr('y', (s) => yScale(s.y) - 10)
                 .attr("dx", barWidth/2)
                 .text((s) => `$${formatNumber((s.y).toFixed(2))}`)
-                .attr('font-size', '11px')
+                .attr('font-size', '14px')
                 .attr('text-anchor', 'middle')
                 .attr('fill', 'hsl(0, 0%, 17%)')
                 .attr('font-weight', '800')        

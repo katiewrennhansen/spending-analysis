@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Transaction } from './Transaction'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-    faChevronLeft, 
-    faChevronRight 
-} from '@fortawesome/free-solid-svg-icons';
+import { Toolbar } from './Toolbar'
 
 interface Props {
     transactions: Transaction[];
@@ -16,8 +12,10 @@ export const TransactionsList: React.FC<Props> = ({ transactions, dates }) => {
     const [perPageStart, setPerPageStart] = useState(0);
     const [perPageEnd, setPerPageEnd] = useState(20);
 
+    //calculate number of total pages
     const totalPages = Math.ceil(transactions.length / 20);
 
+    //paginate to the next page
     const prevPage = (): void => {
         if(page > 1){
             let newPage = page - 1;
@@ -31,6 +29,7 @@ export const TransactionsList: React.FC<Props> = ({ transactions, dates }) => {
         }
     }
 
+    //paginate to previous page
     const nextPage = (): void => {
         if(page < totalPages){
             let newPage = page + 1;
@@ -39,59 +38,27 @@ export const TransactionsList: React.FC<Props> = ({ transactions, dates }) => {
             let pageStart = perPageStart + 20;
             let pageEnd = pageStart + 20
 
-
             setPerPageStart(pageStart)
             setPerPageEnd(pageEnd)
         }
     }
 
     useEffect(() => {
+        //run re-render on page change
     }, [page])
- 
  
     return (
         <div className="transactions-list">
             <h2>Transaction List{dates?.length ? `: ${dates[0]} - ${dates[dates.length - 1]}` : ''}</h2>
-            <div className="transaction-toolbar">
-                <p>
-                    Showing 
-                    {(totalPages > 1) && 
-                        ` ${perPageStart + 1} - ${
-                            (perPageEnd > transactions.length) 
-                                ? transactions.length 
-                                : perPageEnd} of `
-                    }
-                    {transactions?.length 
-                        ? transactions.length 
-                        : '0'
-                    } transaction{transactions.length !== 1 ? 's' : ''}
-                </p>
-                <div className="pagination">
-                    <button 
-                        className="prev-btn" 
-                        onClick={() => prevPage()
-                    }>
-                        <FontAwesomeIcon 
-                            icon={faChevronLeft} 
-                            className="icon"
-                        />
-                        Prev
-                    </button>
-
-                    <p>Page {page} of {totalPages}</p>
-
-                    <button 
-                        className="next-btn" 
-                        onClick={() => nextPage()
-                    }>
-                        Next
-                        <FontAwesomeIcon 
-                            icon={faChevronRight} 
-                            className="icon"
-                        />
-                    </button>
-                </div>
-            </div>
+            <Toolbar 
+                transactions={transactions}
+                totalPages={totalPages}
+                perPageStart={perPageStart}
+                perPageEnd={perPageEnd}
+                nextPage={nextPage}
+                prevPage={prevPage}
+                page={page}
+            />
             { transactions?.length
                 ? <table className="transactions-table">
                     <thead>

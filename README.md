@@ -1,5 +1,7 @@
 # Spending Analysis App
 
+This project can be viewed at: https://katiewrennhansen.github.io/spending-analysis/
+
 ## Summary
 The aim for this project is to create an application that will track monthly spending data and display insightful data visualizations based on all transactions made in a single month. The goal is not to store any user transaction data, but instead to allow a user to upload a CSV, which will automatically generate insights surrounding their spending habits. The current necessary format for the CSV is listed below. 
 
