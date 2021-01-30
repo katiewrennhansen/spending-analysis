@@ -14,4 +14,4 @@ export const Transaction: React.FC<Props> = ({ transaction }) => {
             ))}
         </tr>
     )
-}
+};

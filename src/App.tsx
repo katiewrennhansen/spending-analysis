@@ -7,10 +7,12 @@ import { TransactionsList } from './components/TransactionsList';
 import { Monthly } from './components/Monthly';
 import { 
   buildBreakdown, 
-  cleanData,
+  buildCategories,
   buildDateRange,
-  buildSummary
-} from './utils/utilities';
+  buildSummary,
+  cleanData,
+  excludeCategories
+} from './utils/dataManupulation';
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,22 +20,25 @@ import {
 } from "react-router-dom";
 import './styles/App.css';
 
+//initial state variables
 const initialTransactions: Transaction[] = [];
-const emptyArray: any[] = [];
+const emptyDates: string[] = [];
+const emptyCategories: Category[] = [];
 
 export const App: React.FC<{}> = () => {
-  const [initial, setInitial] = useState(initialTransactions)
-  const [transactions, setTransactions] = useState(initialTransactions)
-  const [breakdown, setBreakdown] = useState({})
-  const [summary, setSummary] = useState({})
-  const [dates, setDates] = useState(emptyArray)
-  const [file, setFile] = useState('')
-  const [error, setError] = useState(false)
-  const [categories, setCategories] = useState(emptyArray)
+  const [initial, setInitial] = useState(initialTransactions);
+  const [transactions, setTransactions] = useState(initialTransactions);
+  const [breakdown, setBreakdown] = useState({});
+  const [summary, setSummary] = useState({});
+  const [dates, setDates] = useState(emptyDates);
+  const [file, setFile] = useState('');
+  const [error, setError] = useState(false);
+  const [categories, setCategories] = useState(emptyCategories);
 
   //build data on file load
-  const onFileLoad = (data: Transaction[], fileInfo: any): void => {
-    if(data){
+  const onFileLoad = (data: Transaction[], fileInfo: FileInfo): void => {
+    if(data && fileInfo){
+      //set active file name
       setFile(fileInfo.name)
 
       //remove extraneous fields from transations object
@@ -43,66 +48,54 @@ export const App: React.FC<{}> = () => {
       //set initial category array - duplicated to preserve original list
       setInitial(cleanedData)
 
-      //build spending summary from transaction data
-      createSummary(cleanedData)
-
-      let categoryArray: string[] = [];
-      let categoryObj: Summary[] = []
-
-      cleanedData.forEach(transaction => {
-        if(!categoryArray.includes(transaction['Category'])) {
-          var key = transaction['Category'];
-          categoryArray.push(key)
-          categoryObj.push({ 
-              name: key,
-              active: false 
-          })
-        }
-      })
-
+      //create category object
+      let categoryObj = buildCategories(cleanedData)
       setCategories(categoryObj)
 
+      //build spending summary from transaction data
+      createSummary(cleanedData)
     } else {
       //set error status to true
       setError(true)
     }
-  }
+  };
 
-  const toggleCategory = (category: Summary): void => {
-    let toggledCategories: Summary[] = []
+  //function for toggling active category
+  const toggleCategory = (category: Category) : void => {
+    let toggledCategories: Category[] = [];
   
-    categories.forEach(cat => {
-      if(cat.name === category.name){
-        toggledCategories.push({
+    categories.forEach(cat => 
+      (cat.name === category.name)
+        ? toggledCategories.push({
           ...cat,
           active: (cat.active) ? false : true
         })
-      } else {
-        toggledCategories.push(cat)
-      }
-    })
-
+        : toggledCategories.push(cat)
+    )
     setCategories(toggledCategories)
 
-    const cleanedData = cleanData(initial, toggledCategories)
+    //exclude categories from filtered data
+    const cleanedData = excludeCategories(initial, toggledCategories)
     setTransactions(cleanedData)
 
     //build spending summary from transaction data
     createSummary(cleanedData)
-  }
+  };
 
-  //create spending summary (breadown, date range, summary)
+  //create spending summary (breakdown, date range, summary)
   const createSummary = (transactions: Transaction[]): void => { 
       //set category breakdown
       let newBreakdown = buildBreakdown(transactions)
       setBreakdown(newBreakdown)
 
+      //build date range
       let dateRange = buildDateRange(transactions)
       setDates(dateRange);
 
+      //create summary object
       let newSummary = buildSummary(transactions);
       setSummary(newSummary)
-  }
+  };
 
   return (
     <Router>
@@ -152,6 +145,6 @@ export const App: React.FC<{}> = () => {
       </div>
     </Router>
   );
-}
+};
 
 export default App;

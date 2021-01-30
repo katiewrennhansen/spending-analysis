@@ -9,7 +9,7 @@ interface Props {
 export const Overview: React.FC<Props> = ({ dates, summary }) => {
     return (
         <div className="home-summary">
-            <h2>{dates?.length ? `${dates[0]} - ${dates[dates.length - 1]}` : ''}</h2>
+            <h2>{dates?.length ? `${dates[0]} - ${dates[1]}` : ''}</h2>
             <div className="spending-summary">
                 <div className="card">
                     <h3>Total Income +</h3>
@@ -21,7 +21,7 @@ export const Overview: React.FC<Props> = ({ dates, summary }) => {
                 </div>
                 <div className="card">
                     <h3>Total Saved</h3>
-                    <p className="green-success">${formatNumber(summary.totalSaved)}</p>
+                    <p className={formatNumber(summary.totalSaved).includes('-') ? 'red-warning' : 'green-success'}>${formatNumber(summary.totalSaved)}</p>
                 </div>
                 <div className="card">
                     <h3>Percent Saved</h3>
@@ -30,4 +30,4 @@ export const Overview: React.FC<Props> = ({ dates, summary }) => {
             </div>
         </div>
     )
-}
+};

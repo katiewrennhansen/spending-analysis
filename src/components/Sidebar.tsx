@@ -35,4 +35,4 @@ export const Sidebar: React.FC = () => {
             </ul>
         </aside>
     )
-}
+};

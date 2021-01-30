@@ -11,14 +11,17 @@ interface Props {
 export const Dashboard: React.FC<Props> = ({ breakdown, dates, summary }) => {
     return (
         <div>
-            <h2>Spending Breakdown{dates?.length ? `: ${dates[0]} - ${dates[dates.length - 1]}` : ''}</h2>
+            <h2>Spending Breakdown{dates?.length ? `: ${dates[0]} - ${dates[1]}` : ''}</h2>
             {dates?.length
                ? <div>
                     <BreakdownBarChart breakdown={breakdown} />
-                    <Summary breakdown={breakdown} summary={summary}/>
+                    <Summary 
+                        breakdown={breakdown} 
+                        summary={summary}
+                    />
                 </div>
                 : <p className="error-message">There is no data available. Please upload a CSV to view spending breakdown.</p>
             }
         </div>
     )
-}
+};

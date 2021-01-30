@@ -1,4 +1,4 @@
-//Define structure of transaction object
+//define structure of transaction object
 interface Transaction {
     'Amount': string;
     'Category': string;
@@ -7,31 +7,44 @@ interface Transaction {
     'Transaction Type': 'credit' | 'debit';
 }
 
-//Define summary object
+//define summary object
 interface Summary {
-    [key: string]: any;
+    [key: string]: number;
 }
 
-//Define breakdown object
+//define category object
+interface Category {
+    name: string;
+    active: boolean;
+}
+
+//define file info object
+interface FileInfo {
+    name: string;
+    size: number;
+    type: string;
+}
+
+//define breakdown object
 interface Breakdown {
     [key: string]: number;
 }
 
-//Graph item obejct
+//graph item obejct
 interface GraphItem  {
     x: string | number;
     y: number;
     scale: number;
 }
 
-//Handle object.keys mapping
+//handle object.keys mapping
 type ObjectKeys<T> = 
     T extends object ? (keyof T)[] :
     T extends number ? [] :
     T extends Array<any> | string ? string[] :
     never;
 
-//Handle object.keys mapping
+//handle object.keys mapping
 interface ObjectConstructor {
     keys<T>(o: T): ObjectKeys<T>
 }

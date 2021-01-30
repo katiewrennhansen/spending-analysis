@@ -49,7 +49,7 @@ export const TransactionsList: React.FC<Props> = ({ transactions, dates }) => {
  
     return (
         <div className="transactions-list">
-            <h2>Transaction List{dates?.length ? `: ${dates[0]} - ${dates[dates.length - 1]}` : ''}</h2>
+            <h2>Transaction List{dates?.length ? `: ${dates[0]} - ${dates[1]}` : ''}</h2>
             <Toolbar 
                 transactions={transactions}
                 totalPages={totalPages}
@@ -82,4 +82,4 @@ export const TransactionsList: React.FC<Props> = ({ transactions, dates }) => {
             }
         </div>
     )
-}
+};

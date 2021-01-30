@@ -3,20 +3,17 @@ import CSVReader from 'react-csv-reader';
 import { Overview } from './Overview';
 import { Categories } from './Categories';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-    faCheckCircle
-} from '@fortawesome/free-solid-svg-icons';
-
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
-    onFileLoad: (transactions: Transaction[], fileInfo: any) => void;
-    toggleCategory: (category: Summary) => void;
+    onFileLoad: (transactions: Transaction[], fileInfo: FileInfo) => void;
+    toggleCategory: (category: Category) => void;
     transactions: Transaction[];
     dates: string[];
     summary: Summary;
     file: string;
     error: boolean;
-    categories: Summary[]
+    categories: Category[]
 }
 
 export const Home: React.FC<Props> = ({ 
@@ -32,9 +29,9 @@ export const Home: React.FC<Props> = ({
     return (
         <div className="home">
             <h2>Welcome!</h2>
-            {!transactions?.length ? <p className="error-message">Please select a CSV file to upload.</p> : null}
+            {!transactions?.length && <p className="error-message">Please select a CSV file to upload.</p>}
             
-            {error ? <p className="error-message">Something went wrong. Please try again.</p> : null}
+            {error && <p className="error-message">Something went wrong. Please try again.</p>}
 
             <div className="csv-upload">
                 <CSVReader

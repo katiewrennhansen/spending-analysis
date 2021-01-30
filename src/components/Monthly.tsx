@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { 
-    buildGraph, 
-    breakdownMonth 
-} from '../utils/utilities';
+import { buildGraph } from '../utils/utilities';
+import { breakdownMonth } from '../utils/dataManupulation';
 
 interface Props {
     transactions: Transaction[];
@@ -11,8 +9,10 @@ interface Props {
 }
 
 export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => {
-    //array of all categories in transaction list
-    const categories = Object.keys(breakdown);
+    //get array of all categories in transaction list
+    const categories: string[] = [];
+    Object.keys(breakdown).map(key => categories.push(key.toString()));
+   
     //set initial category to populate dropdown & viz
     const [activeCat, setActiveCat] = useState(categories[0]);
 
@@ -22,13 +22,13 @@ export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => 
         } else {
             //if changes in activeCat or transactions, re-build visualization
             const monthlyBreakdown = breakdownMonth(transactions, activeCat);
-            buildGraph(monthlyBreakdown, 'monthly-breakdown', true)
+            buildGraph(monthlyBreakdown, 'monthly-breakdown', true);
         }
-    }, [transactions, activeCat])
+    }, [transactions, activeCat]);
 
     return (
         <div className="monthly-chart">
-            <h2>Monthly Data{dates?.length ? `: ${dates[0]} - ${dates[dates.length - 2]}` : ''}</h2>
+            <h2>Monthly Data{dates?.length ? `: ${dates[0]} - ${dates[1]}` : ''}</h2>
 
             {transactions?.length
                 ? <div> 

@@ -8,8 +8,8 @@ import {
 
 interface Props {
     transactions: Transaction[];
-    categories: Summary[];
-    toggleCategory: (category: Summary) => void;
+    categories: Category[];
+    toggleCategory: (category: Category) => void;
 }
 
 export const Categories: React.FC<Props> = ({ categories, toggleCategory }) => {
@@ -35,7 +35,7 @@ export const Categories: React.FC<Props> = ({ categories, toggleCategory }) => {
                         {categories.map((cat, i) =>  (
                             <div 
                                 key={i} 
-                                className={`category-option  pointer ${cat?.active ? 'selected' : ''}`}
+                                className={`category-option pointer ${cat?.active ? 'selected' : ''}`}
                                 onClick={() => toggleCategory(cat)}
                             >
                                 <FontAwesomeIcon icon={faTimes} />
@@ -48,7 +48,7 @@ export const Categories: React.FC<Props> = ({ categories, toggleCategory }) => {
                 {activeCat.map((cat, i) =>  (
                     <div 
                         key={i} 
-                        className={`category-option ${cat?.active ? 'selected' : ''}`}
+                        className={`category-option pointer ${cat?.active ? 'selected' : ''}`}
                         onClick={() => toggleCategory(cat)}
                     >
                         <FontAwesomeIcon icon={faTimes} />
@@ -58,5 +58,5 @@ export const Categories: React.FC<Props> = ({ categories, toggleCategory }) => {
             </div>
             }
         </div>
-    )
-}
+    );
+};

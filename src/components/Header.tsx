@@ -14,4 +14,4 @@ export const Header: React.FC = () => {
             <h1>SpendAnalyzer</h1>
         </div>
     )
-}
+};
