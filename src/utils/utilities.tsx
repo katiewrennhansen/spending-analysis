@@ -13,7 +13,6 @@ import * as _d3 from 'd3';
     7. breakdownMonth - build monthly data for selected category over time
     8. buildGraph - build d3 visualization
     9. formatNumber - format numbers with commas in the thousands place, and round to 2 decimal pts
-
 */
 
 //build category breakdown
@@ -256,6 +255,12 @@ export const buildGraph = (breakdown: any[], el:string, addText: boolean): void 
                             .x((d: GraphItem) => d.scale + margin + barWidth/2)
                             .y((d: GraphItem) => yScale(d.y) + margin)
                             .curve(_d3.curveMonotoneX)
+            
+            // Define the div for the tooltip
+            let tooltip = _d3.select('div.monthly-breakdown-container')
+                                .append('div')			
+                                .attr('class', 'tooltip')				
+                                .style('opacity', 0);
 
             //append line chart
             svg.append("path")
@@ -265,10 +270,19 @@ export const buildGraph = (breakdown: any[], el:string, addText: boolean): void 
                 .attr("stroke-width", 1.5)
                 .attr("d", line)
 
+            //append dots and add tooltip functionality 
+            svg.selectAll('dot')	
+                .data(breakdown)		
+                .enter()
+                    .append('circle')								
+                    .attr('r', 4)	
+                    .attr('cx', (s) => s.scale + margin + barWidth/2)
+                    .attr('cy', (s) => yScale(s.y) + margin)
+
             //append text elements
             bar.append('text')
                 .attr('x', (s) => s.scale)
-                .attr('y', (s) => yScale(s.y) - 10)
+                .attr('y', (s) => yScale(s.y) - 24)
                 .attr("dx", barWidth/2)
                 .text((s) => `$${formatNumber((s.y).toFixed(2))}`)
                 .attr('font-size', '14px')

@@ -1,3 +1,22 @@
+.monthly-breakdown-container {
+  position: relative;
+}
+
+.tooltip {	
+  top: 10px;
+  right: 10px;
+  width: 100px;
+  position: absolute;			
+  text-align: center;
+  padding: 8px 16px;				
+  font: 14px;		
+  background: var(--light-accent-color);	
+  border: 2px solid var(--main-bg-color);
+  border-radius: 4px;			
+  pointer-events: none;	
+}
+
+
 /* GENERAL SYLES */
 *,
 *::before,

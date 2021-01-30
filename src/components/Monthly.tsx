@@ -49,7 +49,9 @@ export const Monthly: React.FC<Props> = ({ transactions, dates, breakdown }) => 
                         </div>
                         <h3>{activeCat}</h3>
                     </div>
-                    <svg className='monthly-breakdown' preserveAspectRatio="xMinYMin meet" viewBox="0 0 1040 660"></svg>
+                    <div className="monthly-breakdown-container">
+                        <svg className='monthly-breakdown' preserveAspectRatio="xMinYMin meet" viewBox="0 0 1040 660"></svg>
+                    </div>
                 </div>
                 : <p className="error-message">There is no data available. Please upload a CSV to view monthly spending summary.</p>
             }
